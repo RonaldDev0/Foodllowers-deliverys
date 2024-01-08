@@ -8,20 +8,39 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "eslintConfig": {
+    "extends": [
+      "./node_modules/standard/eslintrc.json",
+      "next/core-web-vitals"
+    ],
+    "rules": {
+      "react-hooks/exhaustive-deps": "off"
+    }
+  },
   "dependencies": {
+    "@ducanh2912/next-pwa": "^10.1.0",
+    "@nextui-org/react": "^2.2.9",
+    "@supabase/auth-helpers-nextjs": "^0.8.7",
+    "@supabase/supabase-js": "^2.39.2",
+    "framer-motion": "^10.17.9",
+    "lucide-react": "^0.307.0",
+    "next": "14.0.4",
     "react": "^18",
     "react-dom": "^18",
-    "next": "14.0.4"
+    "sharp": "^0.33.1",
+    "zustand": "^4.4.7"
   },
   "devDependencies": {
-    "typescript": "^5",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.0.1",
-    "postcss": "^8",
-    "tailwindcss": "^3.3.0",
+    "encoding": "^0.1.13",
     "eslint": "^8",
-    "eslint-config-next": "14.0.4"
+    "eslint-config-next": "14.0.4",
+    "postcss": "^8",
+    "standard": "^17.1.0",
+    "tailwindcss": "^3.3.0",
+    "typescript": "^5"
   }
 }
