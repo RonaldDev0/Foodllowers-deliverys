@@ -5,8 +5,8 @@ import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
 
 export const metadata: Metadata = {
-  title: 'Foodllowers-Kitchens',
-  description: 'Foodllowers-Kitchens',
+  title: 'Foodllowers-Deliverys',
+  description: 'Foodllowers-Deliverys',
   manifest: 'manifest.json'
 }
 

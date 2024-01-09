@@ -43,7 +43,45 @@ export function Providers ({ children }: { children: ReactNode }) {
           setStore('user', session.user)
         }
       })
-  })
+  }, [])
+
+  useEffect(() => {
+    supabase.auth.getSession()
+      .then(({ data: { session } }: any) => {
+        if (session) {
+          setStore('user', session.user)
+          supabase
+            .from('deliverys')
+            .select('*')
+            .eq('user_id', session.user.id)
+            .then(({ data }) => {
+              if (data?.length) {
+                const deliveryId = data[0].id
+                setStore('deliveryId', deliveryId)
+                supabase
+                  .from('orders')
+                  .select('*')
+                  .eq('delivery_id', deliveryId)
+                  .then(({ data }) => {
+                    setStore('currentOrder', data?.filter(order => order.order_state === 'recogiendo...')[0])
+                    supabase.channel('orders').on(
+                      'postgres_changes',
+                      {
+                        event: 'UPDATE',
+                        schema: 'public',
+                        table: 'orders',
+                        filter: `delivery_id=eq.${deliveryId}`
+                      },
+                      payload => console.log(payload.new)
+                    ).subscribe()
+                  })
+                // return
+              }
+              // router.push('https://foodllowers.vercel.app/')
+            })
+        }
+      })
+  }, [])
 
   return (
     <Context.Provider value={{ supabase }}>
