@@ -4,6 +4,7 @@ import { useEffect } from 'react'
 import { useData } from '@/store'
 import { useSupabase } from './providers'
 import { Switch } from '@nextui-org/react'
+import { NewOrder } from '@/components'
 
 export default function Home () {
   const { user, active, setStore } = useData()
@@ -54,6 +55,7 @@ export default function Home () {
           onClick={setDeliveryState}
         />
       </div>
+      <NewOrder />
     </main>
   )
 }

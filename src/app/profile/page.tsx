@@ -29,6 +29,7 @@ export default function Profile () {
               height='0'
               alt='avatar'
               className='rounded-full border-4 border-blue-700 p-1'
+              priority
             />
             <p className='mt-4'>@{user.user_metadata.full_name}</p>
             <p className='opacity-60'>{user.user_metadata.email}</p>
