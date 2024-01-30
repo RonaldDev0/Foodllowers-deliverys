@@ -2,6 +2,9 @@ import { create } from 'zustand'
 
 export interface order {
   id: any
+  kitchen_address: string
+  kitchen_logo: string
+  delivery_details: string
   product: {
     influencers: {
       full_name: string

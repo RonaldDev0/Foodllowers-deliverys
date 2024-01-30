@@ -72,12 +72,12 @@ export function Providers ({ children }: { children: ReactNode }) {
                         table: 'orders',
                         filter: `delivery_id=eq.${deliveryId}`
                       },
-                      payload => console.log(payload.new)
+                      payload => {
+                        setStore('currentOrder', payload.new)
+                      }
                     ).subscribe()
                   })
-                // return
               }
-              // router.push('https://foodllowers.vercel.app/')
             })
         }
       })
