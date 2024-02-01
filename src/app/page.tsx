@@ -7,12 +7,12 @@ import { Switch } from '@nextui-org/react'
 // import { NewOrder } from '@/components'
 
 export default function Home () {
-  const { user, active, currentOrder, setStore } = useData()
+  const { user, active, setStore } = useData()
   const { supabase } = useSupabase()
   const loginCode = useSearchParams().get('code')
   const router = useRouter()
 
-  const [coords, setCoords] = useState<any>(null)
+  // const [coords, setCoords] = useState<any>(null)
 
   const setDeliveryState = () => {
     supabase
@@ -61,7 +61,7 @@ export default function Home () {
 
   return (
     <main className='flex flex-col gap-4 justify-center items-center'>
-      {coords && (<p>{`latitude: ${coords.latitude} longitud: ${coords.longitude}`}</p>)}
+      {/* {coords && (<p>{`latitude: ${coords.latitude} longitud: ${coords.longitude}`}</p>)} */}
       <div className='w-full flex justify-center gap-48'>
         <p>{active ? 'estas conectado' : 'no estas conectado'}</p>
         <Switch
