@@ -1,18 +1,18 @@
 'use client'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useData } from '@/store'
 import { useSupabase } from './providers'
 import { Switch } from '@nextui-org/react'
-// import { NewOrder } from '@/components'
+import { NewOrder } from '@/components'
 
 export default function Home () {
-  const { user, active, setStore } = useData()
+  const { user, active, currentOrder, setStore } = useData()
   const { supabase } = useSupabase()
   const loginCode = useSearchParams().get('code')
   const router = useRouter()
 
-  // const [coords, setCoords] = useState<any>(null)
+  const [coords, setCoords] = useState<any>(null)
 
   const setDeliveryState = () => {
     supabase
@@ -27,17 +27,17 @@ export default function Home () {
       })
   }
 
-  // useEffect(() => {
-  //   if (!('geolocation' in navigator)) {
-  //     console.log('La geolocalización no está disponible en tu navegador.')
-  //     return
-  //   }
-  //   navigator.geolocation.getCurrentPosition(({ coords }) => {
-  //     // console.log(`Latitud: ${coords.latitude}`)
-  //     // console.log(`Longitud: ${coords.longitude}`)
-  //     setCoords(coords)
-  //   }, error => console.log(error), { enableHighAccuracy: true })
-  // }, [])
+  useEffect(() => {
+    if (!('geolocation' in navigator)) {
+      console.log('La geolocalización no está disponible en tu navegador.')
+      return
+    }
+    navigator.geolocation.getCurrentPosition(({ coords }) => {
+      // console.log(`Latitud: ${coords.latitude}`)
+      // console.log(`Longitud: ${coords.longitude}`)
+      setCoords(coords)
+    }, error => console.log(error), { enableHighAccuracy: true })
+  }, [])
 
   useEffect(() => {
     if (loginCode) {
@@ -61,7 +61,7 @@ export default function Home () {
 
   return (
     <main className='flex flex-col gap-4 justify-center items-center'>
-      {/* {coords && (<p>{`latitude: ${coords.latitude} longitud: ${coords.longitude}`}</p>)} */}
+      {coords && (<p>{`latitude: ${coords.latitude} longitud: ${coords.longitude}`}</p>)}
       <div className='w-full flex justify-center gap-48'>
         <p>{active ? 'estas conectado' : 'no estas conectado'}</p>
         <Switch
@@ -70,14 +70,14 @@ export default function Home () {
           onClick={setDeliveryState}
         />
       </div>
-      {/* {currentOrder && (
+      {currentOrder && (
         <NewOrder
           deliveryData={{
             earnings: 10500,
             distance: '1.2km'
           }}
         />
-      )} */}
+      )}
     </main>
   )
 }
