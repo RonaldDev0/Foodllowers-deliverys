@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { useData } from '@/store'
 import { useSupabase } from './providers'
 import { Switch } from '@nextui-org/react'
-import { NewOrder } from '@/components'
+// import { NewOrder } from '@/components'
 
 export default function Home () {
   const { user, active, currentOrder, setStore } = useData()
@@ -27,17 +27,17 @@ export default function Home () {
       })
   }
 
-  useEffect(() => {
-    if (!('geolocation' in navigator)) {
-      console.log('La geolocalización no está disponible en tu navegador.')
-      return
-    }
-    navigator.geolocation.getCurrentPosition(({ coords }) => {
-      // console.log(`Latitud: ${coords.latitude}`)
-      // console.log(`Longitud: ${coords.longitude}`)
-      setCoords(coords)
-    }, error => console.log(error), { enableHighAccuracy: true })
-  }, [])
+  // useEffect(() => {
+  //   if (!('geolocation' in navigator)) {
+  //     console.log('La geolocalización no está disponible en tu navegador.')
+  //     return
+  //   }
+  //   navigator.geolocation.getCurrentPosition(({ coords }) => {
+  //     // console.log(`Latitud: ${coords.latitude}`)
+  //     // console.log(`Longitud: ${coords.longitude}`)
+  //     setCoords(coords)
+  //   }, error => console.log(error), { enableHighAccuracy: true })
+  // }, [])
 
   useEffect(() => {
     if (loginCode) {
@@ -70,14 +70,14 @@ export default function Home () {
           onClick={setDeliveryState}
         />
       </div>
-      {currentOrder && (
+      {/* {currentOrder && (
         <NewOrder
           deliveryData={{
             earnings: 10500,
             distance: '1.2km'
           }}
         />
-      )}
+      )} */}
     </main>
   )
 }
