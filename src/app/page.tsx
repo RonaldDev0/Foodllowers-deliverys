@@ -7,7 +7,7 @@ import { Switch } from '@nextui-org/react'
 import { NewOrder, GpsNotification } from '@/components'
 
 export default function Home () {
-  const { user, active, currentOrder, currentPosition, setStore } = useData()
+  const { user, active, setStore } = useData()
   const { supabase } = useSupabase()
   const loginCode = useSearchParams().get('code')
   const router = useRouter()
