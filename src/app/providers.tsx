@@ -31,22 +31,12 @@ export function Providers ({ children }: { children: ReactNode }) {
   const { setStore } = useData()
 
   useEffect(() => {
-    if (!('geolocation' in navigator)) {
-      return
-    }
-
     navigator.geolocation.watchPosition(({ coords: { latitude, longitude } }) => {
       setStore('currentPosition', { latitude, longitude })
     },
-    () => {
-      setStore('currentPosition', null)
-    })
+    () => setStore('currentPosition', null))
 
-    // off the watcher, for eficiency
-    // add the condition
-    // if (condition) {
-    //   return () => navigator.geolocation.clearWatch(watcher)
-    // }
+    // return () => navigator.geolocation.clearWatch(watcher)
   }, [])
 
   useEffect(() => {
