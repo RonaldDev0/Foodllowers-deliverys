@@ -1,6 +1,6 @@
 'use client'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useData } from '@/store'
 import { useSupabase } from './providers'
 import { Switch } from '@nextui-org/react'
