@@ -31,6 +31,15 @@ export function Providers ({ children }: { children: ReactNode }) {
   const { setStore } = useData()
 
   useEffect(() => {
+    if (!('geolocation' in navigator)) {
+      return
+    }
+    navigator.geolocation.watchPosition(({ coords: { latitude, longitude } }) => {
+      setStore('currentPosition', { latitude, longitude })
+    })
+  }, [])
+
+  useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(() => router.refresh())
 
     return () => subscription.unsubscribe()

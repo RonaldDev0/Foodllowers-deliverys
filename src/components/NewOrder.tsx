@@ -12,6 +12,11 @@ interface IProps {
 
 export function NewOrder ({ deliveryData }: IProps) {
   const { currentOrder } = useData()
+
+  if (!currentOrder) {
+    return
+  }
+
   return (
     <div className='fixed w-screen h-screen flex top-0 left-0 justify-center items-center'>
       <Card className='p-2'>
