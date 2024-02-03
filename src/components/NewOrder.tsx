@@ -1,7 +1,9 @@
+'use client'
 import { Card, CardHeader, CardBody, CardFooter, Button } from '@nextui-org/react'
 import Image from 'next/image'
 import { useData } from '@/store'
 import { MapPin, CircleDollarSign, ShoppingBag } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 
 interface IProps {
   deliveryData: {
@@ -12,6 +14,7 @@ interface IProps {
 
 export function NewOrder ({ deliveryData }: IProps) {
   const { currentOrder } = useData()
+  const router = useRouter()
 
   if (!currentOrder) {
     return
@@ -45,7 +48,7 @@ export function NewOrder ({ deliveryData }: IProps) {
           </div>
         </CardBody>
         <CardFooter className='flex flex-col'>
-          <Button color='secondary' className='w-full text-lg'>
+          <Button color='secondary' className='w-full text-lg' onClick={() => router.push('https://waze.com/ul?ll=40.758895,-73.985131&navigate=yes')}>
             Comenzar
           </Button>
         </CardFooter>
