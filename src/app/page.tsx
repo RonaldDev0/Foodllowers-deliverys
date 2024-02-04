@@ -7,7 +7,7 @@ import { Switch, Button } from '@nextui-org/react'
 import { NewOrder, GpsNotification } from '@/components'
 
 export default function Home () {
-  const { user, active, currentPosition, setStore } = useData()
+  const { user, active, setStore } = useData()
   const { supabase } = useSupabase()
   const loginCode = useSearchParams().get('code')
   const router = useRouter()
@@ -55,7 +55,13 @@ export default function Home () {
           onClick={setDeliveryState}
         />
       </div>
-      <Button color='secondary' className='w-full text-lg' onClick={() => window.open(`https://waze.com/ul?ll=${currentPosition?.latitude},${currentPosition?.longitude}&navigate=yes`, '_blank')}>
+      <Button
+        color='secondary'
+        className='w-full text-lg'
+        onClick={() => {
+          window.open('https://waze.com/ul?ll=4.6544,-74.1187&navigate=yes', '_blank')
+        }}
+      >
         Comenzar
       </Button>
       <GpsNotification />
