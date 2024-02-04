@@ -55,7 +55,7 @@ export default function Home () {
           onClick={setDeliveryState}
         />
       </div>
-      <Button color='secondary' className='w-full text-lg' onClick={() => router.push('https://waze.com/ul?ll=40.758895,-73.985131&navigate=yes')}>
+      <Button color='secondary' className='w-full text-lg' onClick={() => window.open('https://waze.com/ul?ll=40.758895,-73.985131&navigate=yes', '_blank')}>
         Comenzar
       </Button>
       <GpsNotification />
