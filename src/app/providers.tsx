@@ -28,14 +28,14 @@ const Context = createContext<SupabaseContext | undefined>(undefined)
 export function Providers ({ children }: { children: ReactNode }) {
   const [supabase] = useState(() => createPagesBrowserClient())
   const router = useRouter()
-  const { deliveryId, setStore } = useData()
+  const { deliveryId, active, setStore } = useData()
 
   useEffect(() => {
     if (deliveryId === null) {
       return
     }
 
-    navigator.geolocation.watchPosition(({ coords: { latitude, longitude, speed, altitude } }) => {
+    const watcher = navigator.geolocation.watchPosition(({ coords: { latitude, longitude, speed, altitude } }) => {
       supabase
         .from('deliverys')
         .update({ current_location: JSON.stringify({ latitude, longitude, speed, altitude }) })
@@ -49,10 +49,10 @@ export function Providers ({ children }: { children: ReactNode }) {
     },
     () => setStore('currentPosition', null))
 
-    // if (active === false) {
-    //   return () => navigator.geolocation.clearWatch(watcher)
-    // }
-  }, [deliveryId])
+    if (active === false) {
+      return () => navigator.geolocation.clearWatch(watcher)
+    }
+  }, [deliveryId, active])
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(() => router.refresh())
