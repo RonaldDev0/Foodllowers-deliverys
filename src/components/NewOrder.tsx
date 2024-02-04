@@ -12,7 +12,7 @@ interface IProps {
 }
 
 export function NewOrder ({ deliveryData }: IProps) {
-  const { currentOrder } = useData()
+  const { currentOrder, currentPosition } = useData()
 
   if (!currentOrder) {
     return
@@ -46,7 +46,7 @@ export function NewOrder ({ deliveryData }: IProps) {
           </div>
         </CardBody>
         <CardFooter className='flex flex-col'>
-          <Button color='secondary' className='w-full text-lg' onClick={() => window.open('https://waze.com/ul?ll=40.758895,-73.985131&navigate=yes', '_blank')}>
+          <Button color='secondary' className='w-full text-lg' onClick={() => window.open(`https://waze.com/ul?ll=${currentPosition?.latitude},${currentPosition?.longitude}&navigate=yes`, '_blank')}>
             Comenzar
           </Button>
         </CardFooter>
