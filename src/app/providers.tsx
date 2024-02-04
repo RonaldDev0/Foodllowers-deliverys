@@ -35,7 +35,7 @@ export function Providers ({ children }: { children: ReactNode }) {
       return
     }
 
-    const watcher = navigator.geolocation.watchPosition(({ coords: { latitude, longitude, speed, altitude } }) => {
+    navigator.geolocation.watchPosition(({ coords: { latitude, longitude, speed, altitude } }) => {
       supabase
         .from('deliverys')
         .update({ current_location: JSON.stringify({ latitude, longitude, speed, altitude }) })
@@ -49,9 +49,9 @@ export function Providers ({ children }: { children: ReactNode }) {
     },
     () => setStore('currentPosition', null))
 
-    if (active === false) {
-      return () => navigator.geolocation.clearWatch(watcher)
-    }
+    // if (active === false) {
+    //   return () => navigator.geolocation.clearWatch(watcher)
+    // }
   }, [deliveryId, active])
 
   useEffect(() => {
