@@ -34,7 +34,7 @@ export function NewOrder ({ deliveryData }: IProps) {
           </div>
           <div className='flex gap-2 justify-center items-center'>
             <MapPin size={28} />
-            <p>{currentOrder?.kitchen_address}</p>
+            <p>{currentOrder?.kitchen_address?.address}</p>
           </div>
           <div className='flex items-center gap-2'>
             <Image src={currentOrder?.kitchen_logo!} alt='logo' width='50' height='50' />
@@ -46,7 +46,13 @@ export function NewOrder ({ deliveryData }: IProps) {
           </div>
         </CardBody>
         <CardFooter className='flex flex-col'>
-          <Button color='secondary' className='w-full text-lg'>
+          <Button
+            color='secondary'
+            className='w-full text-lg'
+            onClick={() => {
+              window.open(`https://waze.com/ul?ll=${currentOrder.kitchen_address.latitude},${currentOrder.kitchen_address.longitude}&navigate=yes`, '_blank')
+            }}
+          >
             Comenzar
           </Button>
         </CardFooter>

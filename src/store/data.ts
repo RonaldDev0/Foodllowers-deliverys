@@ -2,7 +2,11 @@ import { create } from 'zustand'
 
 export interface order {
   id: any
-  kitchen_address: string
+  kitchen_address: {
+    address: string
+    latitude: number
+    longitude: number
+  }
   kitchen_logo: string
   delivery_details: string
   product: {

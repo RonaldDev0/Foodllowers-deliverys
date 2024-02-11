@@ -7,12 +7,7 @@ export function GpsNotification () {
   const { currentPosition } = useData()
 
   if (currentPosition) {
-    return (
-      <div>
-        <p>latitude: {currentPosition.latitude}</p>
-        <p>longitude: {currentPosition.longitude}</p>
-      </div>
-    )
+    return
   }
 
   return (

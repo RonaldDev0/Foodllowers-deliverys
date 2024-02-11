@@ -3,7 +3,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect } from 'react'
 import { useData } from '@/store'
 import { useSupabase } from './providers'
-import { Switch, Button } from '@nextui-org/react'
+import { Switch } from '@nextui-org/react'
 import { NewOrder, GpsNotification } from '@/components'
 
 export default function Home () {
@@ -55,15 +55,6 @@ export default function Home () {
           onClick={setDeliveryState}
         />
       </div>
-      <Button
-        color='secondary'
-        className='w-full text-lg'
-        onClick={() => {
-          window.open('https://waze.com/ul?ll=4.6544,-74.1187&navigate=yes', '_blank')
-        }}
-      >
-        Comenzar
-      </Button>
       <GpsNotification />
       <NewOrder
         deliveryData={{

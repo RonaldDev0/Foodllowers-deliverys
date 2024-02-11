@@ -38,12 +38,12 @@ export function Providers ({ children }: { children: ReactNode }) {
     const watcher = navigator.geolocation.watchPosition(({ coords: { latitude, longitude, speed, altitude } }) => {
       supabase
         .from('deliverys')
-        .update({ current_location: JSON.stringify({ latitude, longitude, speed, altitude }) })
+        .update({ current_location: { latitude, longitude, speed, altitude } })
         .eq('id', deliveryId)
         .select()
         .then(res => {
           if (res.data) {
-            setStore('currentPosition', JSON.parse(res.data[0].current_location))
+            setStore('currentPosition', res.data[0].current_location)
           }
         })
     },
@@ -87,7 +87,9 @@ export function Providers ({ children }: { children: ReactNode }) {
                   .select('*')
                   .eq('delivery_id', deliveryId)
                   .then(({ data }) => {
-                    setStore('currentOrder', data?.filter(order => order.order_state === 'recogiendo...')[0])
+                    const beforeAccepted = data?.filter(order => order.order_state === 'recogiendo...')
+                    const pendingAccept = data?.filter(order => order.order_state === 'buscando delivery...')
+                    setStore('currentOrder', beforeAccepted?.length ? beforeAccepted[0] : pendingAccept?.[0])
                     supabase.channel('orders').on(
                       'postgres_changes',
                       {
