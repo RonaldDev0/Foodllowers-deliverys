@@ -87,9 +87,25 @@ export function Providers ({ children }: { children: ReactNode }) {
                   .select('*')
                   .eq('delivery_id', deliveryId)
                   .then(({ data }) => {
+                    const customerTrip = data?.filter(order => order.order_state === 'entregando...')
                     const beforeAccepted = data?.filter(order => order.order_state === 'recogiendo...')
                     const pendingAccept = data?.filter(order => order.order_state === 'buscando delivery...')
-                    setStore('currentOrder', beforeAccepted?.length ? beforeAccepted[0] : pendingAccept?.[0])
+
+                    if (customerTrip?.length) {
+                      setStore('currentOrder', customerTrip[0])
+                      setStore('tripState', 'kitchen=>customer')
+                    }
+
+                    if (beforeAccepted?.length) {
+                      setStore('currentOrder', beforeAccepted?.[0])
+                      setStore('tripState', 'reciveOrder')
+                    }
+
+                    if (pendingAccept?.length) {
+                      setStore('currentOrder', pendingAccept[0])
+                      setStore('tripState', '=>kitchen')
+                    }
+
                     supabase.channel('orders').on(
                       'postgres_changes',
                       {

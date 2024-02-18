@@ -2,6 +2,11 @@ import { create } from 'zustand'
 
 export interface order {
   id: any
+  kitchen_id: string
+  invoice_id: string
+  user_address: {
+    complete: string
+  }
   kitchen_address: {
     address: string
     latitude: number
@@ -22,7 +27,12 @@ export interface order {
 }
 
 interface State {
+  deliveryData: {
+  earnings: number
+  distance: string
+}
   deliveryId: any
+  tripState: string | null
   user: any
   active: boolean | null
   currentOrder: order | null
@@ -38,6 +48,11 @@ interface Actions {
 
 export const useData = create<State & Actions>(set => ({
   deliveryId: null,
+  tripState: null,
+  deliveryData: {
+    earnings: 10500,
+    distance: '1.2km'
+  },
   user: null,
   active: null,
   currentOrder: null,

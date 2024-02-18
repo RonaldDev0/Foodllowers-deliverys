@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 import { useData } from '@/store'
 import { useSupabase } from './providers'
 import { Switch } from '@nextui-org/react'
-import { NewOrder, GpsNotification } from '@/components'
+import { Order, GpsNotification } from '@/components'
 
 export default function Home () {
   const { user, active, setStore } = useData()
@@ -56,12 +56,7 @@ export default function Home () {
         />
       </div>
       <GpsNotification />
-      <NewOrder
-        deliveryData={{
-          earnings: 10500,
-          distance: '1.2km'
-        }}
-      />
+      <Order />
     </main>
   )
 }
