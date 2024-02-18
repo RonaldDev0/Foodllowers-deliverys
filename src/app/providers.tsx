@@ -87,22 +87,25 @@ export function Providers ({ children }: { children: ReactNode }) {
                   .select('*')
                   .eq('delivery_id', deliveryId)
                   .then(({ data }) => {
-                    const customerTrip = data?.filter(order => order.order_state === 'entregando...')
-                    const beforeAccepted = data?.filter(order => order.order_state === 'recogiendo...')
-                    const pendingAccept = data?.filter(order => order.order_state === 'buscando delivery...')
+                    if (!data?.length) {
+                      return
+                    }
 
-                    if (customerTrip?.length) {
-                      setStore('currentOrder', customerTrip[0])
+                    const customerTrip = data[0].order_state === 'entregando...'
+                    const beforeAccepted = data[0].order_state === 'recogiendo...'
+                    const pendingAccept = data[0].order_state === 'buscando delivery...'
+
+                    setStore('currentOrder', data[0])
+
+                    if (customerTrip) {
                       setStore('tripState', 'kitchen=>customer')
                     }
 
-                    if (beforeAccepted?.length) {
-                      setStore('currentOrder', beforeAccepted?.[0])
+                    if (beforeAccepted) {
                       setStore('tripState', 'reciveOrder')
                     }
 
-                    if (pendingAccept?.length) {
-                      setStore('currentOrder', pendingAccept[0])
+                    if (pendingAccept) {
                       setStore('tripState', '=>kitchen')
                     }
 
@@ -114,8 +117,23 @@ export function Providers ({ children }: { children: ReactNode }) {
                         table: 'orders',
                         filter: `delivery_id=eq.${deliveryId}`
                       },
-                      payload => {
-                        setStore('currentOrder', payload.new)
+                      ({ new: data }) => {
+                        const customerTrip = data.order_state === 'entregando...'
+                        const beforeAccepted = data.order_state === 'recogiendo...'
+                        const pendingAccept = data.order_state === 'buscando delivery...'
+                        setStore('currentOrder', data)
+
+                        if (customerTrip) {
+                          setStore('tripState', 'kitchen=>customer')
+                        }
+
+                        if (beforeAccepted) {
+                          setStore('tripState', 'reciveOrder')
+                        }
+
+                        if (pendingAccept) {
+                          setStore('tripState', '=>kitchen')
+                        }
                       }
                     ).subscribe()
                   })
