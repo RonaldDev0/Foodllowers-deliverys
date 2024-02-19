@@ -2,16 +2,11 @@
 import { useData } from '@/store'
 import { useSupabase } from '@/app/providers'
 import { Card, CardHeader, CardBody, CardFooter, Button } from '@nextui-org/react'
-import { ShoppingBag } from 'lucide-react'
 import Image from 'next/image'
 
 export function ReciveOrder () {
   const { supabase } = useSupabase()
-  const {
-    currentOrder,
-    // deliveryData
-    setStore
-  } = useData()
+  const { currentOrder, setStore } = useData()
 
   if (currentOrder === null) {
     return
@@ -42,7 +37,7 @@ export function ReciveOrder () {
         </CardHeader>
         <CardBody className='w-96 gap-8'>
           <div className='flex gap-3 mb-2'>
-            <p>Numero de factura:</p>
+            <p>ID del pedido:</p>
             <div className='flex justify-center items-center'>
               <p>{currentOrder.invoice_id.slice(0, 6)}-</p>
               <p className='font-bold text-lg'>{currentOrder.invoice_id.slice(6, 10)}</p>
@@ -50,12 +45,12 @@ export function ReciveOrder () {
           </div>
           <div className='flex items-center gap-2'>
             <Image src={currentOrder?.kitchen_logo!} alt='logo' width='50' height='50' />
-            <p>{currentOrder?.product.influencers.full_name}</p>
+            <div>
+              <p>x1 {currentOrder?.product.name}</p>
+              <p className='opacity-50'>{currentOrder?.product.influencers.full_name}</p>
+            </div>
           </div>
-          <div className='flex items-center gap-2'>
-            <ShoppingBag size={28} />
-            <p>{currentOrder?.delivery_details}</p>
-          </div>
+
         </CardBody>
         <CardFooter className='flex gap-2'>
           <Button

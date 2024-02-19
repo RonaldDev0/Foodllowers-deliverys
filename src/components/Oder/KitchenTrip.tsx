@@ -1,9 +1,8 @@
 /* eslint-disable array-callback-return */
 'use client'
 import { Card, CardHeader, CardBody, CardFooter, Button, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure, Input } from '@nextui-org/react'
-import Image from 'next/image'
 import { useData } from '@/store'
-import { MapPin, CircleDollarSign, ShoppingBag } from 'lucide-react'
+import { CircleDollarSign, ChefHat, Home } from 'lucide-react'
 import { useSupabase } from '@/app/providers'
 import { useState, useRef } from 'react'
 
@@ -113,17 +112,16 @@ export function KitchenTrip () {
               </div>
               <p>{deliveryData.distance}</p>
             </div>
-            <div className='flex gap-2 justify-center items-center'>
-              <MapPin size={28} />
-              <p>{currentOrder?.kitchen_address?.address}</p>
-            </div>
-            <div className='flex items-center gap-2'>
-              <Image src={currentOrder?.kitchen_logo!} alt='logo' width='50' height='50' />
-              <p>{currentOrder?.product.influencers.full_name}</p>
-            </div>
-            <div className='flex items-center gap-2'>
-              <ShoppingBag size={28} />
-              <p>{currentOrder?.delivery_details}</p>
+            <div>
+              <div className='flex gap-2 justify-center items-center'>
+                <ChefHat size={28} />
+                <p>{currentOrder?.kitchen_address?.address}</p>
+              </div>
+              <div className='bg-white w-[0.5px] h-8 ml-3 my-2'></div>
+              <div className='flex items-center gap-2'>
+                <Home size={28} />
+                <p>{currentOrder?.user_address.complete}</p>
+              </div>
             </div>
           </CardBody>
           <CardFooter className='flex gap-2'>
@@ -169,10 +167,19 @@ export function KitchenTrip () {
                 </div>
               </ModalBody>
               <ModalFooter className='flex justify-center'>
-                <Button color='primary' onPress={onClose} className='w-full'>
+                <Button
+                  color='danger'
+                  variant='light'
+                  className='w-full'
+                  onPress={onClose}
+                >
                   Cancelar
                 </Button>
-                <Button color='secondary' onPress={handleSubmit} className='w-full'>
+                <Button
+                  color='secondary'
+                  className='w-full'
+                  onPress={handleSubmit}
+                >
                   Confirmar
                 </Button>
               </ModalFooter>

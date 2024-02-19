@@ -5,6 +5,7 @@ export interface order {
   kitchen_id: string
   invoice_id: string
   user_address: {
+    aditionalInfo: string
     complete: string
   }
   kitchen_address: {
