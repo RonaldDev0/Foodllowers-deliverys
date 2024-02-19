@@ -117,7 +117,7 @@ export function KitchenTrip () {
                 <ChefHat size={28} />
                 <p>{currentOrder?.kitchen_address?.address}</p>
               </div>
-              <div className='bg-white w-[0.5px] h-8 ml-3 my-2'></div>
+              <div className='bg-white w-[0.5px] h-8 ml-3 my-2'>{}</div>
               <div className='flex items-center gap-2'>
                 <Home size={28} />
                 <p>{currentOrder?.user_address.complete}</p>
