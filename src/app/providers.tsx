@@ -87,25 +87,17 @@ export function Providers ({ children }: { children: ReactNode }) {
                   .select('*')
                   .eq('delivery_id', deliveryId)
                   .then(({ data }) => {
-                    if (!data?.length) {
-                      return
-                    }
+                    const customerTrip = data?.[0]?.order_state === 'entregando...'
+                    const beforeAccepted = data?.[0]?.order_state === 'recogiendo...'
+                    const pendingAccept = data?.[0]?.order_state === 'buscando delivery...'
 
-                    const customerTrip = data[0].order_state === 'entregando...'
-                    const beforeAccepted = data[0].order_state === 'recogiendo...'
-                    const pendingAccept = data[0].order_state === 'buscando delivery...'
-
-                    setStore('currentOrder', data[0])
+                    setStore('currentOrder', data?.[0])
 
                     if (customerTrip) {
                       setStore('tripState', 'kitchen=>customer')
-                    }
-
-                    if (beforeAccepted) {
+                    } else if (beforeAccepted) {
                       setStore('tripState', 'reciveOrder')
-                    }
-
-                    if (pendingAccept) {
+                    } else if (pendingAccept) {
                       setStore('tripState', '=>kitchen')
                     }
 
@@ -125,13 +117,9 @@ export function Providers ({ children }: { children: ReactNode }) {
 
                         if (customerTrip) {
                           setStore('tripState', 'kitchen=>customer')
-                        }
-
-                        if (beforeAccepted) {
+                        } else if (beforeAccepted) {
                           setStore('tripState', 'reciveOrder')
-                        }
-
-                        if (pendingAccept) {
+                        } else if (pendingAccept) {
                           setStore('tripState', '=>kitchen')
                         }
                       }

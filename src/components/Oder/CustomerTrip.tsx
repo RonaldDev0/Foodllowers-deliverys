@@ -48,6 +48,21 @@ export function CustomerTrip () {
 
                 onClose()
                 setStore('tripState', null)
+
+                fetch('/api/send-email', {
+                  cache: 'no-store',
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({
+                    customerEmail: currentOrder.user_email,
+                    nombre: currentOrder.user_name,
+                    direccion: currentOrder.user_address.complete,
+                    numeroDePedido: currentOrder.invoice_id,
+                    detallesDelPedido: currentOrder.product.name,
+                    marcaDelRestaurante: currentOrder.product.influencers.full_name,
+                    transacction: currentOrder.transaction_amount
+                  })
+                })
               })
           })
       })

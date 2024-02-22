@@ -4,6 +4,8 @@ export interface order {
   id: any
   kitchen_id: string
   invoice_id: string
+  user_name: string
+  user_email: string
   user_address: {
     aditionalInfo: string
     complete: string
@@ -25,6 +27,7 @@ export interface order {
     description: string
     price: number
   }
+  transaction_amount: string
 }
 
 interface State {
