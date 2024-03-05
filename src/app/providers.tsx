@@ -110,20 +110,29 @@ export function Providers ({ children }: { children: ReactNode }) {
                         filter: `delivery_id=eq.${deliveryId}`
                       },
                       ({ new: data }) => {
-                        const customerTrip = data.order_state === 'entregando...'
-                        const beforeAccepted = data.order_state === 'recogiendo...'
-                        const pendingAccept = data.order_state === 'buscando delivery...'
-                        setStore('currentOrder', data)
-
-                        if (customerTrip) {
-                          setStore('tripState', 'kitchen=>customer')
-                        } else if (beforeAccepted) {
-                          setStore('tripState', 'reciveOrder')
-                        } else if (pendingAccept) {
-                          setStore('tripState', '=>kitchen')
+                        if (!data) {
+                          return 
                         }
-                      }
-                    ).subscribe()
+                        supabase
+                         .from('orders')
+                          .select('*')
+                          .eq('delivery_id', deliveryId)
+                          .then(({ data }) => {
+                          const customerTrip = data?.[0]?.order_state === 'entregando...'
+                          const beforeAccepted = data?.[0]?.order_state === 'recogiendo...'
+                          const pendingAccept = data?.[0]?.order_state === 'buscando delivery...'
+
+                          setStore('currentOrder', data?.[0])
+
+                          if (customerTrip) {
+                            setStore('tripState', 'kitchen=>customer')
+                          } else if (beforeAccepted) {
+                            setStore('tripState', 'reciveOrder')
+                          } else if (pendingAccept) {
+                            setStore('tripState', '=>kitchen')
+                          }
+                            })
+                          }).subscribe()
                   })
               }
             })

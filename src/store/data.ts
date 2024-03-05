@@ -8,12 +8,22 @@ export interface order {
   user_email: string
   user_address: {
     aditionalInfo: string
-    complete: string
+    formatted_address: string
+    geometry: {
+      location: {
+        lat: string | number
+        lng: string | number
+      }
+    }
   }
   kitchen_address: {
-    address: string
-    latitude: number
-    longitude: number
+    formatted_address: string
+    geometry: {
+      location: {
+        lat: string | number
+        lng: string | number
+      }
+    }
   }
   kitchen_logo: string
   delivery_details: string
@@ -31,10 +41,6 @@ export interface order {
 }
 
 interface State {
-  deliveryData: {
-  earnings: number
-  distance: string
-}
   deliveryId: any
   tripState: string | null
   user: any
@@ -53,10 +59,6 @@ interface Actions {
 export const useData = create<State & Actions>(set => ({
   deliveryId: null,
   tripState: null,
-  deliveryData: {
-    earnings: 10500,
-    distance: '1.2km'
-  },
   user: null,
   active: null,
   currentOrder: null,

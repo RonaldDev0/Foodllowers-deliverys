@@ -4,15 +4,56 @@ import { Card, CardHeader, CardBody, CardFooter, Button, Modal, ModalContent, Mo
 import { useData } from '@/store'
 import { CircleDollarSign, ChefHat, Home } from 'lucide-react'
 import { useSupabase } from '@/app/providers'
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 
 export function KitchenTrip () {
   const { supabase } = useSupabase()
-  const { currentOrder, deliveryId, deliveryData, setStore } = useData()
+  const { currentOrder, currentPosition, setStore } = useData()
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
+
+  const [earnings, setEarnings] = useState('')
+  const [distance, setDistance] = useState('')
+  const [duration, setDuration] = useState('')
   const [values, setValues] = useState(['', '', '', ''])
   const inputsRef = useRef<any>([])
   const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (!currentOrder) {
+      return
+    }
+
+    setEarnings('2000')
+
+    fetch('/api/maps_distance', {
+      cache: 'no-cache',
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        origin: {
+          lat: currentPosition?.latitude,
+          lng: currentPosition?.longitude
+        },
+        destination: currentOrder.user_address.geometry.location,
+        waypoint: currentOrder.kitchen_address.geometry.location
+      })
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (!data.routes[0].legs) {
+          return
+        }
+
+        const { distance: { text: firstDistance }, duration: { text: firstDuration } } = data.routes[0].legs[0]
+        const { distance: { text: secondDistance }, duration: { text: secondDuration } } = data.routes[0].legs[1]
+
+        const distance = (parseFloat(firstDistance) + parseFloat(secondDistance)).toFixed(1) + 'km'
+        const duration = parseFloat(firstDuration) + parseFloat(secondDuration) + 'mins'
+
+        setDistance(distance)
+        setDuration(duration)
+      })
+  }, [currentOrder])
 
   if (!currentOrder) {
     return
@@ -32,29 +73,6 @@ export function KitchenTrip () {
         focusNextInput(index)
       }
     }
-  }
-
-  const acceptOrder = () => {
-    supabase
-      .from('orders')
-      .update({ order_state: 'recogiendo...' })
-      .eq('id', currentOrder.id)
-      .select('*')
-      .then(({ data }) => {
-        if (data?.length) {
-          supabase
-            .from('deliverys')
-            .update({ free: false })
-            .eq('id', deliveryId)
-            .select('*')
-            .then(({ data }) => {
-              if (data?.length) {
-                const { latitude, longitude } = currentOrder.kitchen_address
-                window.open(`https://waze.com/ul?ll=${latitude},${longitude}&navigate=yes`, '_blank')
-              }
-            })
-        }
-      })
   }
 
   const handleSubmit = () => {
@@ -108,19 +126,20 @@ export function KitchenTrip () {
             <div className='flex justify-around font-semibold text-xl'>
               <div className='flex justify-center items-center gap-1'>
                 <CircleDollarSign size={28} />
-                <p>{deliveryData.earnings.toLocaleString()}</p>
+                <p>{earnings.toLocaleString()}</p>
               </div>
-              <p>{deliveryData.distance}</p>
+              <p>{distance}</p>
+              <p>{duration}</p>
             </div>
             <div>
-              <div className='flex gap-2 justify-center items-center'>
+              <div className='flex gap-2 items-center'>
                 <ChefHat size={28} />
-                <p>{currentOrder?.kitchen_address?.address}</p>
+                <p>{currentOrder.kitchen_address.formatted_address}</p>
               </div>
               <div className='bg-white w-[0.5px] h-8 ml-3 my-2'>{}</div>
               <div className='flex items-center gap-2'>
                 <Home size={28} />
-                <p>{currentOrder?.user_address.complete}</p>
+                <p>{currentOrder?.user_address.formatted_address}</p>
               </div>
             </div>
           </CardBody>
@@ -128,7 +147,10 @@ export function KitchenTrip () {
             <Button
               color='primary'
               className='w-full text-lg'
-              onClick={acceptOrder}
+              onClick={() => {
+                const { lat, lng } = currentOrder.kitchen_address.geometry.location
+                window.open(`https://waze.com/ul?ll=${lat},${lng}&navigate=yes`, '_blank')
+              }}
             >
               Como llegar?
             </Button>

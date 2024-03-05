@@ -13,6 +13,8 @@ export function CustomerTrip () {
     return
   }
 
+  console.log(currentOrder)
+
   function handleSubmit (onClose: Function) {
     if (currentOrder === null) {
       return
@@ -22,8 +24,9 @@ export function CustomerTrip () {
       .from('shipments')
       .insert({ ...currentOrder, order_state: 'entregado' })
       .select('id')
-      .then(({ data }) => {
-        if (!data) {
+      .then(({ error }) => {
+        if (error) {
+          console.log(error)
           return
         }
 
@@ -56,7 +59,7 @@ export function CustomerTrip () {
                   body: JSON.stringify({
                     customerEmail: currentOrder.user_email,
                     nombre: currentOrder.user_name,
-                    direccion: currentOrder.user_address.complete,
+                    direccion: currentOrder.user_address.formatted_address,
                     numeroDePedido: currentOrder.invoice_id,
                     detallesDelPedido: currentOrder.product.name,
                     marcaDelRestaurante: currentOrder.product.influencers.full_name,
@@ -78,7 +81,7 @@ export function CustomerTrip () {
           <CardBody className='w-96 gap-8'>
             <div className='flex gap-2 items-center'>
               <Home size={28} />
-              <p>{currentOrder.user_address?.complete}</p>
+              <p>{currentOrder.user_address?.formatted_address}</p>
             </div>
             <div className='flex items-center gap-2'>
               <Info size={28} />
@@ -89,7 +92,10 @@ export function CustomerTrip () {
             <Button
               color='primary'
               className='w-full text-lg'
-              onClick={() => window.open(`https://waze.com/ul?q=${currentOrder.user_address?.complete}&navigate=yes`, '_blank')}
+              onClick={() => {
+                const { lat, lng } = currentOrder.user_address.geometry.location
+                window.open(`https://waze.com/ul?ll=${lat},${lng}&navigate=yes`, '_blank')
+              }}
             >
               Como llegar?
             </Button>
