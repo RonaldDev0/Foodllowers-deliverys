@@ -13,8 +13,6 @@ export function CustomerTrip () {
     return
   }
 
-  console.log(currentOrder)
-
   function handleSubmit (onClose: Function) {
     if (currentOrder === null) {
       return
@@ -26,7 +24,6 @@ export function CustomerTrip () {
       .select('id')
       .then(({ error }) => {
         if (error) {
-          console.log(error)
           return
         }
 

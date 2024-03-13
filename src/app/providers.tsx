@@ -82,6 +82,7 @@ export function Providers ({ children }: { children: ReactNode }) {
               if (data?.length) {
                 const deliveryId = data[0].id
                 setStore('deliveryId', deliveryId)
+                setStore('delivery', data[0])
                 supabase
                   .from('orders')
                   .select('*')

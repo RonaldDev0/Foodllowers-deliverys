@@ -11,7 +11,7 @@ export function GpsNotification () {
   }
 
   return (
-    <div className='fixed z-50 w-full h-screen top-0 left-0 flex justify-center items-center bg-foreground-100'>
+    <div className='fixed z-40 w-full h-screen top-0 left-0 flex justify-center items-center bg-foreground-100'>
       <Card>
         <CardHeader className='justify-center font-semibold gap-3'>
           <Ban size={28} />

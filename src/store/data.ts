@@ -42,6 +42,9 @@ export interface order {
 
 interface State {
   deliveryId: any
+  delivery: {
+    bank_account: any
+  } | null
   tripState: string | null
   user: any
   active: boolean | null
@@ -58,6 +61,7 @@ interface Actions {
 
 export const useData = create<State & Actions>(set => ({
   deliveryId: null,
+  delivery: null,
   tripState: null,
   user: null,
   active: null,
