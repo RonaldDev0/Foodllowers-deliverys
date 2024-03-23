@@ -40,18 +40,12 @@ export function KitchenTrip () {
     })
       .then(res => res.json())
       .then(data => {
-        if (!data.routes[0].legs) {
+        if (!data) {
           return
         }
 
-        const { distance: { text: firstDistance }, duration: { text: firstDuration } } = data.routes[0].legs[0]
-        const { distance: { text: secondDistance }, duration: { text: secondDuration } } = data.routes[0].legs[1]
-
-        const distance = (parseFloat(firstDistance) + parseFloat(secondDistance)).toFixed(1) + 'km'
-        const duration = parseFloat(firstDuration) + parseFloat(secondDuration) + 'mins'
-
-        setDistance(distance)
-        setDuration(duration)
+        setDistance(data.distance)
+        setDuration(data.duration)
       })
   }, [currentOrder])
 

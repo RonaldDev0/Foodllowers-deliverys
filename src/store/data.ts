@@ -29,6 +29,7 @@ export interface order {
   delivery_details: string
   product: {
     influencers: {
+      avatar: string
       full_name: string
       preview: string
     }

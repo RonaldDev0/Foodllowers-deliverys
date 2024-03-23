@@ -46,7 +46,7 @@ export function ReciveOrder () {
               </div>
             </div>
             <div className='flex items-center gap-2'>
-              <Avatar src={currentOrder.product?.influencers?.preview} />
+              <Avatar src={currentOrder.product?.influencers?.avatar} />
               <div>
                 <p>x1 {currentOrder?.product?.name}</p>
                 <p className='opacity-50'>{currentOrder?.product?.influencers?.full_name}</p>
