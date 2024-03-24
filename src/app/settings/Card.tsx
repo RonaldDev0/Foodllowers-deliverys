@@ -1,12 +1,12 @@
-import { Card as Cardd, CardBody } from '@nextui-org/react'
+import { Card, CardBody } from '@nextui-org/react'
 import { ChevronRight } from 'lucide-react'
 import Link from 'next/link'
 import type { ISetting } from './page'
 
-export function Card ({ path, icon, title }: ISetting) {
+export function CardItem ({ path, icon, title }: ISetting) {
   return (
     <Link href={'/settings' + path}>
-      <Cardd className='relative group'>
+      <Card className='relative group'>
         <CardBody>
           <div className='flex justify-between relative'>
             <div className='flex items-center gap-3'>
@@ -18,7 +18,7 @@ export function Card ({ path, icon, title }: ISetting) {
             </div>
           </div>
         </CardBody>
-      </Cardd>
+      </Card>
     </Link>
   )
 }

@@ -1,4 +1,5 @@
-import { Card } from './Card'
+import { ColorSchema } from './ColorSchema'
+import { CardItem } from './Card'
 import { Landmark } from 'lucide-react'
 
 export interface ISetting {
@@ -18,8 +19,9 @@ const settings: ISetting[] = [
 export default function Settings () {
   return (
     <main className='flex flex-col gap-2'>
+      <ColorSchema />
       {settings.map(({ path, icon, title }, index) => (
-        <Card
+        <CardItem
           key={index}
           path={path}
           icon={icon}

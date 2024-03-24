@@ -42,6 +42,7 @@ export interface order {
 }
 
 interface State {
+  darkMode: boolean
   deliveryId: any
   delivery: {
     bank_account: any
@@ -61,6 +62,7 @@ interface Actions {
 }
 
 export const useData = create<State & Actions>(set => ({
+  darkMode: true,
   deliveryId: null,
   delivery: null,
   tripState: null,
