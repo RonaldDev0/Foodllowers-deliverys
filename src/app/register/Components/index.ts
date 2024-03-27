@@ -1,5 +1,4 @@
 export * from './BankAccount'
 export * from './IdentificationCard'
 export * from './License'
-export * from './PhoneNumber'
 export * from './PropertyCard'

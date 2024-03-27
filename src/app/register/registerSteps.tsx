@@ -1,5 +1,6 @@
 import { Smartphone, Fingerprint, Car, KeySquare, Landmark } from 'lucide-react'
-import { BankAccount, IdentificationCard, License, PhoneNumber, PropertyCard } from './Components'
+import { BankAccount, IdentificationCard, License, PropertyCard } from './Components'
+import { PhoneNumber } from './Components/PhoneNumber'
 
 export interface IStep {
   icon: any,
