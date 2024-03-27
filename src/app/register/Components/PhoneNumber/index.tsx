@@ -8,7 +8,7 @@ import { CodeForm } from './CodeForm'
 //  sendTwilioSMS({ to: number, body: message })
 // }
 
-export function PhoneNumber ({ onClose }: { onClose: any }) {
+export default function PhoneNumber ({ onClose }: { onClose: any }) {
   const [step, setStep] = useState<number>(0)
   const [number, setNumber] = useState('')
   const [code, setCode] = useState<any>(null)
