@@ -79,13 +79,11 @@ export function Providers ({ children }: { children: ReactNode }) {
             .select('*')
             .eq('user_id', session.user.id)
             .then(({ data }) => {
-              if (data?.length === 0) {
+              console.log(data?.[0])
+              if (data?.[0].register_complete === false || data?.length === 0) {
                 router.push('/register')
               }
               if (data?.length) {
-                if (data?.[0].register_completed === false) {
-                  router.push('/register')
-                }
                 const deliveryId = data[0].id
                 setStore('deliveryId', deliveryId)
                 setStore('delivery', data[0])
