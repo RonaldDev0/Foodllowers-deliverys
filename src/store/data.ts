@@ -45,8 +45,9 @@ interface State {
   darkMode: boolean
   deliveryId: any
   delivery: {
-    bank_account: any
-  } | null
+    bank_account: any,
+    register_complete: boolean
+  }
   tripState: string | null
   user: any
   active: boolean | null
@@ -64,7 +65,10 @@ interface Actions {
 export const useData = create<State & Actions>(set => ({
   darkMode: true,
   deliveryId: null,
-  delivery: null,
+  delivery: {
+    register_complete: false,
+    bank_account: null
+  },
   tripState: null,
   user: null,
   active: null,

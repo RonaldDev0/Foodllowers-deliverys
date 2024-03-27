@@ -1,17 +1,9 @@
-'use client'
-import { useData } from '@/store'
 import { Card, CardHeader, CardBody } from '@nextui-org/react'
 import { Ban, MapPin } from 'lucide-react'
 
 export function GpsNotification () {
-  const { currentPosition } = useData()
-
-  if (currentPosition) {
-    return
-  }
-
   return (
-    <div className='fixed z-40 w-full h-screen top-0 left-0 flex justify-center items-center bg-foreground-100'>
+    <div className='fixed z-10 w-full h-screen top-0 left-0 flex justify-center items-center bg-foreground-100'>
       <Card>
         <CardHeader className='justify-center font-semibold gap-3'>
           <Ban size={28} />

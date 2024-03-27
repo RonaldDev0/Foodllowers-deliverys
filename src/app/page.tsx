@@ -4,10 +4,10 @@ import { useEffect } from 'react'
 import { useData } from '@/store'
 import { useSupabase } from './providers'
 import { Switch } from '@nextui-org/react'
-import { Order, GpsNotification, BankAccount } from '@/components'
+import { Order, GpsNotification } from '@/components'
 
 export default function Home () {
-  const { user, active, setStore } = useData()
+  const { user, active, currentPosition, delivery, setStore } = useData()
   const { supabase } = useSupabase()
   const loginCode = useSearchParams().get('code')
   const router = useRouter()
@@ -45,6 +45,10 @@ export default function Home () {
     }
   }, [user])
 
+  if (!currentPosition && delivery) {
+    return <GpsNotification />
+  }
+
   return (
     <main className='flex flex-col gap-4 justify-center items-center'>
       <div className='w-full flex justify-center gap-48'>
@@ -55,8 +59,6 @@ export default function Home () {
           onClick={setDeliveryState}
         />
       </div>
-      <GpsNotification />
-      <BankAccount />
       <Order />
     </main>
   )

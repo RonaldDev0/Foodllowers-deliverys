@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { useData } from '@/store'
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Avatar, Card, CardHeader } from '@nextui-org/react'
 import { Home, User, History, LogOut, Settings } from 'lucide-react'
-import { useSupabase } from '../app/providers'
+import { useSupabase } from '@/app/providers'
 
 export function NavBarr () {
   const { supabase } = useSupabase()
