@@ -1,14 +1,20 @@
 'use client'
 import { useState } from 'react'
 import { Input, Button } from '@nextui-org/react'
+import { useSupabase } from '@/app/providers'
+import { useData } from '@/store'
 
 interface IProps {
   setStep: Function,
   code: any,
   onClose: Function
+  number: string
 }
 
-export function CodeForm ({ setStep, code, onClose }: IProps) {
+export function CodeForm ({ setStep, code, onClose, number }: IProps) {
+  const { supabase } = useSupabase()
+  const { deliveryId, setStore } = useData()
+
   const [input, setInput] = useState('')
   const [error, setError] = useState<any>(null)
 
@@ -24,8 +30,19 @@ export function CodeForm ({ setStep, code, onClose }: IProps) {
       setError('Codigo incorrecto')
       return
     }
-    console.log('Success!')
-    onClose && onClose()
+    supabase
+      .from('deliverys')
+      .update({ phone_number: number })
+      .eq('id', deliveryId)
+      .select()
+      .then(({ data, error }) => {
+        if (error) {
+          return
+        }
+
+        setStore('delivery', data[0])
+        onClose && onClose()
+      })
   }
 
   return (

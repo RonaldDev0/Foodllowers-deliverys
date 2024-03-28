@@ -22,17 +22,18 @@ export default function Register () {
   }
 
   return (
-    <div className='fixed z-50 w-full h-screen top-0 left-0 flex flex-col justify-center gap-20 items-center backdrop-blur-md'>
+    <main className='fixed z-50 w-full h-screen top-0 left-0 flex flex-col justify-center gap-20 items-center backdrop-blur-md'>
       <div className='flex flex-col gap-10 justify-center items-center'>
         <p className='font-semibold text-xl'>Completa tu registro</p>
         <div className='flex flex-col gap-2'>
           {
-            registerSteps.map((item, index) => (
+            registerSteps.map(({ icon, title, component, tableReference }, index) => (
               <CardItem
                 key={index}
-                icon={item.icon}
-                title={item.title}
-                component={item.component}
+                icon={icon}
+                title={title}
+                component={component}
+                tableReference={tableReference}
               />
             ))
         }
@@ -47,6 +48,6 @@ export default function Register () {
           Cerrar cesion
         </p>
       </div>
-    </div>
+    </main>
   )
 }

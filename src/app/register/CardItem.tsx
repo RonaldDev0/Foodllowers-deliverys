@@ -1,11 +1,15 @@
+'use client'
+import { useData } from '@/store'
 import { cloneElement } from 'react'
 import { Card, CardBody, Modal, ModalContent, ModalHeader, ModalBody, useDisclosure } from '@nextui-org/react'
 import { ChevronRight, Check } from 'lucide-react'
 
 import type { IStep } from './registerSteps'
 
-export function CardItem ({ icon, title, component }: IStep) {
+export function CardItem ({ icon, title, component, tableReference }: IStep) {
+  const { delivery } = useData()
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
+
   return (
     <>
       <div onClick={onOpen}>
@@ -16,9 +20,11 @@ export function CardItem ({ icon, title, component }: IStep) {
                 {icon}
                 <p>{title}</p>
               </div>
-              <div className='absolute top-0 right-0 h-full opacity-100 group-hover:opacity-0 transition-opacity duration-200 flex items-center'>
-                <Check size={25} />
-              </div>
+              {delivery[tableReference] && (
+                <div className='absolute top-0 right-0 h-full opacity-100 group-hover:opacity-0 transition-opacity duration-200 flex items-center'>
+                  <Check size={25} />
+                </div>
+              )}
               <div className='absolute top-0 right-0 h-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center'>
                 <ChevronRight size={20} />
               </div>

@@ -31,5 +31,12 @@ export function PhoneNumber ({ onClose }: { onClose: any }) {
     )
   }
 
-  return <CodeForm code={code} setStep={setStep} onClose={onClose} />
+  return (
+    <CodeForm
+      code={code}
+      setStep={setStep}
+      onClose={onClose}
+      number={number}
+    />
+  )
 }

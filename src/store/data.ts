@@ -47,6 +47,8 @@ interface State {
   delivery: {
     bank_account: any,
     register_complete: boolean
+    phone_number: string | null
+    [key: string]: any
   }
   tripState: string | null
   user: any
@@ -67,7 +69,8 @@ export const useData = create<State & Actions>(set => ({
   deliveryId: null,
   delivery: {
     register_complete: false,
-    bank_account: null
+    bank_account: null,
+    phone_number: null
   },
   tripState: null,
   user: null,

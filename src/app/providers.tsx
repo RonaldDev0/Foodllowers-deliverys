@@ -79,7 +79,6 @@ export function Providers ({ children }: { children: ReactNode }) {
             .select('*')
             .eq('user_id', session.user.id)
             .then(({ data }) => {
-              console.log(data?.[0])
               if (data?.[0].register_complete === false || data?.length === 0) {
                 router.push('/register')
               }
