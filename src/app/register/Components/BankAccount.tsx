@@ -1,8 +1,8 @@
 'use client'
 import { useState } from 'react'
 import { Select, SelectItem, Input, Button } from '@nextui-org/react'
-// import { useData } from '@/store'
-// import { useSupabase } from '@/app/providers'
+import { useData } from '@/store'
+import { useSupabase } from '@/app/providers'
 
 const banks = [
   {
@@ -52,8 +52,8 @@ const banks = [
 ]
 
 export function BankAccount ({ onClose }: { onClose: any }) {
-  // const { deliveryId, setStore } = useData()
-  // const { supabase } = useSupabase()
+  const { deliveryId, setStore } = useData()
+  const { supabase } = useSupabase()
 
   const [bank, setBank] = useState<any>(null)
   const [bankError, setBankError] = useState<any>(null)
@@ -81,18 +81,18 @@ export function BankAccount ({ onClose }: { onClose: any }) {
       return
     }
 
-    // supabase
-    //   .from('deliverys')
-    //   .update({ bank_account: { bank, bankNumber } })
-    //   .eq('id', deliveryId)
-    //   .select('*')
-    //   .then(res => {
-    //     if (res.error) {
-    //       return
-    //     }
-    //     setStore('delivery', res.data[0])
-    //     onClose()
-    //   })
+    supabase
+      .from('deliverys')
+      .update({ bank_account: { bank, bankNumber } })
+      .eq('id', deliveryId)
+      .select('*')
+      .then(({ error, data }) => {
+        if (error) {
+          return
+        }
+        setStore('delivery', data[0])
+        onClose()
+      })
 
     onClose()
   }
