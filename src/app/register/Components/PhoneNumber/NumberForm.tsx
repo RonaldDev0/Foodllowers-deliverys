@@ -12,19 +12,17 @@ const numberSchema = z.string().refine(value => {
 })
 
 export function NumberForm ({ setStep, setNumber, number, createCode }: { setStep: Function, setNumber: Function, number: string, createCode: Function }) {
-  const [input, setInput] = useState(number)
   const [error, setError] = useState<any>(null)
 
   const handleChange = (e: any) => {
-    setInput(e.target.value)
+    setNumber(e.target.value)
     setError(null)
   }
 
   const handleSubmit = (e: any) => {
     e.preventDefault()
     try {
-      const number = numberSchema.parse(input)
-      setNumber(number)
+      setNumber(numberSchema.parse(number))
       createCode()
       setStep(1)
     } catch {
@@ -40,7 +38,7 @@ export function NumberForm ({ setStep, setNumber, number, createCode }: { setSte
           type='number'
           placeholder='Número de celular'
           startContent='+57 '
-          value={input}
+          value={number}
           onChange={handleChange}
           errorMessage={error}
           isInvalid={!!error}

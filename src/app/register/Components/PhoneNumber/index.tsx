@@ -3,11 +3,6 @@ import { useState } from 'react'
 import { NumberForm } from './NumberForm'
 import { CodeForm } from './CodeForm'
 
-// function sendSMS (code: string, number) {
-//  message = `Tu codigo de verificación es: ${code}`
-//  sendTwilioSMS({ to: number, body: message })
-// }
-
 export function PhoneNumber ({ onClose }: { onClose: any }) {
   const [step, setStep] = useState<number>(0)
   const [number, setNumber] = useState('')
@@ -16,8 +11,12 @@ export function PhoneNumber ({ onClose }: { onClose: any }) {
   function createCode () {
     const code = (Math.floor(100000 + Math.random() * 900000)).toString()
     setCode(code)
-    console.log(code)
-    // sendSMS(code)
+    fetch('/api/send-sms', {
+      cache: 'no-store',
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code, number })
+    }).then(res => res.json()).then(console.log)
   }
 
   if (step === 0) {
