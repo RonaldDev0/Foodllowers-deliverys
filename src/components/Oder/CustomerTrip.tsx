@@ -49,7 +49,7 @@ export function CustomerTrip () {
                 onClose()
                 setStore('tripState', null)
 
-                fetch('/api/send-email', {
+                fetch('/api/send_email', {
                   cache: 'no-store',
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },

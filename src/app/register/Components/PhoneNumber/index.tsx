@@ -11,12 +11,12 @@ export function PhoneNumber ({ onClose }: { onClose: any }) {
   function createCode () {
     const code = (Math.floor(100000 + Math.random() * 900000)).toString()
     setCode(code)
-    fetch('/api/send-sms', {
+    fetch('/api/send_sms', {
       cache: 'no-store',
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ code, number })
-    }).then(res => res.json()).then(console.log)
+    }).then(res => res.json())
   }
 
   if (step === 0) {

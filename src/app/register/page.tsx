@@ -45,7 +45,7 @@ export default function Register () {
       </div>
       <div className='w-full flex justify-center'>
         <p className='text-purple-700 font-semibold cursor-pointer' onClick={logout}>
-          Cerrar cesion
+          Cerrar sesión
         </p>
       </div>
     </main>
