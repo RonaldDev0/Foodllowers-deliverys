@@ -82,16 +82,16 @@ export function ImgItem ({ label, value, setValue, bucketPath }: Props) {
   }, [])
 
   return (
-    <div className={`${!value && 'border'} rounded-xl h-56 flex justify-center items-center bg-neutral-800`}>
+    <div className={`${!value && 'border'} rounded-xl h-56 flex justify-center items-center bg-neutral-800 overflow-hidden relative`}>
       {value
         ? (
-          <div className='relative'>
+          <div className='relative w-full h-full'>
             <Image
               src={value}
               alt='img'
-              width={400}
-              height={200}
-              className='w-full h-full rounded-xl'
+              layout='fill'
+              objectFit='cover'
+              className='rounded-xl'
             />
             <XCircle
               color='black'
