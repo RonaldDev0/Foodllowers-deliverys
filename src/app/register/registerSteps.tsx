@@ -22,19 +22,19 @@ export const registerSteps: IStep[] = [
     icon: <Fingerprint size={size} />,
     title: 'Cedula de ciudadania',
     component: <IdentificationCard onClose={() => {}} />,
-    tableReference: ''
+    tableReference: 'identification_card'
   },
   {
     icon: <Car size={size} />,
     title: 'Licencia de conducir',
     component: <License onClose={() => {}} />,
-    tableReference: ''
+    tableReference: 'license'
   },
   {
     icon: <KeySquare size={size} />,
     title: 'Tarjeta de propiedad',
     component: <PropertyCard onClose={() => {}} />,
-    tableReference: ''
+    tableReference: 'property_card'
   },
   {
     icon: <Landmark size={size} />,

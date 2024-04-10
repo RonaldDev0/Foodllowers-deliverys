@@ -10,10 +10,11 @@ interface Props {
   label: string
   value: any
   setValue: Function
+  nullTableValue: object
 }
 
-export function ImgItem ({ label, value, setValue, bucketPath }: Props) {
-  const { deliveryId } = useData()
+export function ImgItem ({ label, value, setValue, bucketPath, nullTableValue }: Props) {
+  const { deliveryId, setStore } = useData()
   const { supabase } = useSupabase()
 
   const [inputElement, setInputElement] = useState<any>(null)
@@ -36,6 +37,17 @@ export function ImgItem ({ label, value, setValue, bucketPath }: Props) {
               return
             }
             setValue(null)
+            supabase
+              .from('deliverys')
+              .update(nullTableValue)
+              .eq('id', deliveryId)
+              .select()
+              .then(({ data, error }) => {
+                if (error) {
+                  return
+                }
+                setStore('delivery', data[0])
+              })
           })
       })
   }
@@ -50,12 +62,25 @@ export function ImgItem ({ label, value, setValue, bucketPath }: Props) {
     const file = e.target.files[0]
     if (file) {
       const bucket = `${bucketPath}${deliveryId}.${file.type.split('/')[1]}`
-      setValue(URL.createObjectURL(file))
-
       supabase
         .storage
         .from('deliverys')
         .upload(bucket, file)
+        .then(({ data, error }: any) => {
+          if (error) {
+            return
+          }
+
+          if (!data.path) {
+            return
+          }
+
+          const { data: { publicUrl } } = supabase
+            .storage
+            .from('deliverys')
+            .getPublicUrl(data.path)
+          setValue(publicUrl + '?time=' + Date.now())
+        })
     }
   }
 
