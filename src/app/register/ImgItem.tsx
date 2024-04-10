@@ -77,7 +77,7 @@ export function ImgItem ({ label, value, setValue, bucketPath }: Props) {
           .storage
           .from('deliverys')
           .getPublicUrl(bucketPath + data[1].name)
-        setValue(publicUrl)
+        setValue(publicUrl + '?time=' + Date.now())
       })
   }, [])
 
