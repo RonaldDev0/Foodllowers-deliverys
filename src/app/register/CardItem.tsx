@@ -13,10 +13,15 @@ export function CardItem ({ icon, title, component, tableReference }: IStep) {
   const [checked, setChecked] = useState(false)
 
   useEffect(() => {
-    if (tableReference === 'identification_card') {
-      const { identification_number: IDNumber, front, back } = delivery.identification_card
-      setChecked(IDNumber && front && back)
+    if (!delivery) {
+      return
     }
+
+    if (tableReference === 'identification_card') {
+      setChecked((delivery?.identification_card?.identification_number && delivery?.identification_card?.front && delivery?.identification_card?.back))
+      return
+    }
+
     setChecked(delivery[tableReference])
   }, [delivery])
 
