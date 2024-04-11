@@ -79,8 +79,8 @@ export function IdentificationCard ({ onClose }: { onClose: any }) {
           nullTableValue={{
             identification_card: {
               front: null,
-              back: delivery.identification_card.back,
-              identification_number: delivery.identification_card.identification_number
+              back: delivery?.identification_card?.back,
+              identification_number: delivery?.identification_card?.identification_number
             }
           }}
         />
@@ -92,8 +92,8 @@ export function IdentificationCard ({ onClose }: { onClose: any }) {
           nullTableValue={{
             identification_card: {
               back: null,
-              front: delivery.identification_card.front,
-              identification_number: delivery.identification_card.identification_number
+              front: delivery.identification_card?.front,
+              identification_number: delivery?.identification_card?.identification_number
             }
           }}
         />

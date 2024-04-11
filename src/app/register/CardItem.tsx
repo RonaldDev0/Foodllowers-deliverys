@@ -18,7 +18,11 @@ export function CardItem ({ icon, title, component, tableReference }: IStep) {
     }
 
     if (tableReference === 'identification_card') {
-      setChecked((delivery?.identification_card?.identification_number && delivery?.identification_card?.front && delivery?.identification_card?.back))
+      setChecked((
+        delivery?.identification_card?.identification_number &&
+        delivery?.identification_card?.front &&
+        delivery?.identification_card?.back
+      ))
       return
     }
 
