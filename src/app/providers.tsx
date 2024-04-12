@@ -79,7 +79,20 @@ export function Providers ({ children }: { children: ReactNode }) {
             .select('*')
             .eq('user_id', session.user.id)
             .then(({ data }) => {
-              if (data?.[0].register_complete === false || data?.length === 0) {
+              if (!data?.length) {
+                supabase
+                  .from('deliverys')
+                  .insert([{ user_id: session.user.id }])
+                  .select()
+                  .then(({ data, error }) => {
+                    if (error) {
+                      return
+                    }
+                    setStore('delivery', data[0])
+                    setStore('deliveryId', data[0].id)
+                  })
+              }
+              if (data?.[0]?.register_complete === false || data?.length === 0) {
                 router.push('/register')
               }
               if (data?.length) {

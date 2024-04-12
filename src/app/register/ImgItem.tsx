@@ -14,42 +14,42 @@ interface Props {
 }
 
 export function ImgItem ({ label, value, setValue, bucketPath, nullTableValue }: Props) {
-  const { deliveryId, setStore } = useData()
+  const { deliveryId, delivery, setStore } = useData()
   const { supabase } = useSupabase()
 
   const [inputElement, setInputElement] = useState<any>(null)
 
   const removeImage = () => {
-    supabase
-      .storage
-      .from('deliverys')
-      .list(bucketPath)
-      .then(({ data, error }) => {
-        if (error) {
-          return
-        }
-        supabase
-          .storage
-          .from('deliverys')
-          .remove([bucketPath + data[1].name])
-          .then(({ error }) => {
-            if (error) {
-              return
-            }
-            setValue(null)
-            supabase
-              .from('deliverys')
-              .update(nullTableValue)
-              .eq('id', deliveryId)
-              .select()
-              .then(({ data, error }) => {
-                if (error) {
-                  return
-                }
-                setStore('delivery', data[0])
-              })
-          })
-      })
+    // supabase
+    //   .storage
+    //   .from('deliverys')
+    //   .list(bucketPath)
+    //   .then(({ data, error }) => {
+    //     if (error) {
+    //       return
+    //     }
+    //     supabase
+    //       .storage
+    //       .from('deliverys')
+    //       .remove([bucketPath + data[1].name])
+    //       .then(({ error }) => {
+    //         if (error) {
+    //           return
+    //         }
+    //         setValue(null)
+    //         supabase
+    //           .from('deliverys')
+    //           .update(nullTableValue)
+    //           .eq('id', deliveryId)
+    //           .select()
+    //           .then(({ data, error }) => {
+    //             if (error) {
+    //               return
+    //             }
+    //             setStore('delivery', data[0])
+    //           })
+    //       })
+    //   })
   }
 
   const handleClick = () => {
@@ -85,25 +85,27 @@ export function ImgItem ({ label, value, setValue, bucketPath, nullTableValue }:
   }
 
   useEffect(() => {
-    supabase
-      .storage
-      .from('deliverys')
-      .list(bucketPath)
-      .then(({ data, error }) => {
-        if (error) {
-          return
-        }
+    console.log(delivery)
 
-        if (data.length <= 1) {
-          return
-        }
+    // supabase
+    //   .storage
+    //   .from('deliverys')
+    //   .list(bucketPath)
+    //   .then(({ data, error }) => {
+    //     if (error) {
+    //       return
+    //     }
 
-        const { data: { publicUrl } } = supabase
-          .storage
-          .from('deliverys')
-          .getPublicUrl(bucketPath + data[1].name)
-        setValue(publicUrl + '?time=' + Date.now())
-      })
+    //     if (data.length <= 1) {
+    //       return
+    //     }
+
+    //     const { data: { publicUrl } } = supabase
+    //       .storage
+    //       .from('deliverys')
+    //       .getPublicUrl(bucketPath + data[1].name)
+    //     setValue(publicUrl + '?time=' + Date.now())
+    //   })
   }, [])
 
   return (

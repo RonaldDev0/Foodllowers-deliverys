@@ -46,7 +46,7 @@ export function License ({ onClose }: { onClose: any }) {
           label='Parte frontal'
           value={img}
           setValue={setImg}
-          bucketPath='license/'
+          bucketPath='license'
           nullTableValue={{ license: null }}
         />
         <Button

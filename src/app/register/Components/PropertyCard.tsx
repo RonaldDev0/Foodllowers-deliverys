@@ -46,7 +46,7 @@ export function PropertyCard ({ onClose }: { onClose: any }) {
           label='Parte frontal'
           value={img}
           setValue={setImg}
-          bucketPath='property_card/'
+          bucketPath='property_card'
           nullTableValue={{ property_card: null }}
         />
         <Button

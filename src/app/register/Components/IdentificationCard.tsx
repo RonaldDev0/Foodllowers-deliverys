@@ -75,7 +75,7 @@ export function IdentificationCard ({ onClose }: { onClose: any }) {
           label='Parte frontal'
           value={img1}
           setValue={setImg1}
-          bucketPath='identification_card/front/'
+          bucketPath='identification_card.front'
           nullTableValue={{
             identification_card: {
               front: null,
@@ -88,7 +88,7 @@ export function IdentificationCard ({ onClose }: { onClose: any }) {
           label='Parte de atras'
           value={img2}
           setValue={setImg2}
-          bucketPath='identification_card/back/'
+          bucketPath='identification_card.back'
           nullTableValue={{
             identification_card: {
               back: null,
