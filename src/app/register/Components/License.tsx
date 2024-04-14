@@ -1,14 +1,9 @@
 'use client'
 import { useState } from 'react'
-import { useSupabase } from '@/app/providers'
-import { useData } from '@/store'
 import { ImgItem } from '../ImgItem'
 import { Button } from '@nextui-org/react'
 
 export function License ({ onClose }: { onClose: any }) {
-  const { supabase } = useSupabase()
-  const { deliveryId, setStore } = useData()
-
   const [img, setImg] = useState<any>(null)
   const [error, setError] = useState<any>(null)
 
@@ -18,19 +13,7 @@ export function License ({ onClose }: { onClose: any }) {
       setError('Ingresa la parte frontal de la licencia')
       return
     }
-
-    supabase
-      .from('deliverys')
-      .update({ license: img })
-      .eq('id', deliveryId)
-      .select()
-      .then(({ data, error }) => {
-        if (error) {
-          return
-        }
-        setStore('delivery', data[0])
-        onClose()
-      })
+    onClose()
   }
 
   return (
