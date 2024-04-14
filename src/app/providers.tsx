@@ -88,6 +88,9 @@ export function Providers ({ children }: { children: ReactNode }) {
                     if (error) {
                       return
                     }
+                    if (data?.[0]?.register_complete === false || data?.length === 0) {
+                      router.push('/register')
+                    }
                     setStore('delivery', data[0])
                     setStore('deliveryId', data[0].id)
                   })

@@ -9,7 +9,7 @@ export function IdentificationCard ({ onClose }: { onClose: any }) {
   const { supabase } = useSupabase()
   const { deliveryId, delivery, setStore } = useData()
 
-  const [input, setInput] = useState(delivery?.identification_card?.identification_number)
+  const [input, setInput] = useState(delivery?.identification_card ? delivery?.identification_card : '')
   const [img1, setImg1] = useState<any>(null)
   const [img2, setImg2] = useState<any>(null)
 
@@ -32,13 +32,7 @@ export function IdentificationCard ({ onClose }: { onClose: any }) {
 
     supabase
       .from('deliverys')
-      .update({
-        identification_card: {
-          identification_number: input,
-          front: img1,
-          back: img2
-        }
-      })
+      .update({ identification_card: input })
       .eq('id', deliveryId)
       .select()
       .then(({ data, error }) => {
@@ -75,27 +69,17 @@ export function IdentificationCard ({ onClose }: { onClose: any }) {
           label='Parte frontal'
           value={img1}
           setValue={setImg1}
-          bucketPath='identification_card.front'
-          nullTableValue={{
-            identification_card: {
-              front: null,
-              back: delivery?.identification_card?.back,
-              identification_number: delivery?.identification_card?.identification_number
-            }
-          }}
+          bucketPath='identification_card/front/'
+          tablePath='identification_card_front'
+          nullTableValue={{ identification_card_front: null }}
         />
         <ImgItem
           label='Parte de atras'
           value={img2}
           setValue={setImg2}
-          bucketPath='identification_card.back'
-          nullTableValue={{
-            identification_card: {
-              back: null,
-              front: delivery.identification_card?.front,
-              identification_number: delivery?.identification_card?.identification_number
-            }
-          }}
+          bucketPath='identification_card/back/'
+          tablePath='identification_card_back'
+          nullTableValue={{ identification_card_back: null }}
         />
         <Button
           type='submit'

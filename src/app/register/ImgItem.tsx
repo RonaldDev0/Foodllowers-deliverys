@@ -11,45 +11,37 @@ interface Props {
   value: any
   setValue: Function
   nullTableValue: object
+  tablePath: string
 }
 
-export function ImgItem ({ label, value, setValue, bucketPath, nullTableValue }: Props) {
+export function ImgItem ({ label, value, setValue, bucketPath, nullTableValue, tablePath }: Props) {
   const { deliveryId, delivery, setStore } = useData()
   const { supabase } = useSupabase()
 
   const [inputElement, setInputElement] = useState<any>(null)
 
   const removeImage = () => {
-    // supabase
-    //   .storage
-    //   .from('deliverys')
-    //   .list(bucketPath)
-    //   .then(({ data, error }) => {
-    //     if (error) {
-    //       return
-    //     }
-    //     supabase
-    //       .storage
-    //       .from('deliverys')
-    //       .remove([bucketPath + data[1].name])
-    //       .then(({ error }) => {
-    //         if (error) {
-    //           return
-    //         }
-    //         setValue(null)
-    //         supabase
-    //           .from('deliverys')
-    //           .update(nullTableValue)
-    //           .eq('id', deliveryId)
-    //           .select()
-    //           .then(({ data, error }) => {
-    //             if (error) {
-    //               return
-    //             }
-    //             setStore('delivery', data[0])
-    //           })
-    //       })
-    //   })
+    supabase
+      .storage
+      .from('deliverys')
+      .remove([delivery[tablePath]])
+      .then(({ error }) => {
+        if (error) {
+          return
+        }
+        setValue(null)
+        supabase
+          .from('deliverys')
+          .update(nullTableValue)
+          .eq('id', deliveryId)
+          .select()
+          .then(({ data, error }) => {
+            if (error) {
+              return
+            }
+            setStore('delivery', data[0])
+          })
+      })
   }
 
   const handleClick = () => {
@@ -67,45 +59,41 @@ export function ImgItem ({ label, value, setValue, bucketPath, nullTableValue }:
         .from('deliverys')
         .upload(bucket, file)
         .then(({ data, error }: any) => {
-          if (error) {
+          if (error || !data.path) {
             return
           }
 
-          if (!data.path) {
-            return
-          }
-
-          const { data: { publicUrl } } = supabase
-            .storage
+          supabase
             .from('deliverys')
-            .getPublicUrl(data.path)
-          setValue(publicUrl + '?time=' + Date.now())
+            .update({ [tablePath]: data.path })
+            .eq('id', deliveryId)
+            .select()
+            .then(({ error, data: res }) => {
+              if (error) {
+                return
+              }
+              setStore('delivery', res[0])
+              const { data: { publicUrl } } = supabase
+              .storage
+              .from('deliverys')
+              .getPublicUrl(data.path)
+
+              setValue(publicUrl + '?time=' + Date.now())
+            })
         })
     }
   }
 
   useEffect(() => {
-    console.log(delivery)
+    if (!delivery[tablePath]) {
+      return
+    }
 
-    // supabase
-    //   .storage
-    //   .from('deliverys')
-    //   .list(bucketPath)
-    //   .then(({ data, error }) => {
-    //     if (error) {
-    //       return
-    //     }
-
-    //     if (data.length <= 1) {
-    //       return
-    //     }
-
-    //     const { data: { publicUrl } } = supabase
-    //       .storage
-    //       .from('deliverys')
-    //       .getPublicUrl(bucketPath + data[1].name)
-    //     setValue(publicUrl + '?time=' + Date.now())
-    //   })
+    const { data: { publicUrl } } = supabase
+      .storage
+      .from('deliverys')
+      .getPublicUrl(delivery[tablePath])
+    setValue(publicUrl + '?time=' + Date.now())
   }, [])
 
   return (
