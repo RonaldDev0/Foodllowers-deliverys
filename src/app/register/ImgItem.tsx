@@ -74,9 +74,9 @@ export function ImgItem ({ label, value, setValue, bucketPath, nullTableValue, t
               }
               setStore('delivery', res[0])
               const { data: { publicUrl } } = supabase
-              .storage
-              .from('deliverys')
-              .getPublicUrl(data.path)
+                .storage
+                .from('deliverys')
+                .getPublicUrl(data.path)
 
               setValue(publicUrl + '?time=' + Date.now())
             })
