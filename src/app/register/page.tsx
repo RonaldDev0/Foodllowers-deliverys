@@ -51,7 +51,7 @@ function validateForm (delivery: any, termsAndConditions: boolean) {
 
 export default function Register () {
   const router = useRouter()
-  const { delivery, setStore } = useData()
+  const { deliveryId, delivery, setStore } = useData()
   const { supabase } = useSupabase()
 
   const [termsAndConditions, setTermsAndConditions] = useState(false)
@@ -72,7 +72,17 @@ export default function Register () {
       return
     }
 
-    router.push('/confirmation')
+    supabase
+      .from('deliverys')
+      .update({ register_step: 'data_validation' })
+      .eq('id', deliveryId)
+      .select()
+      .then(({ data, error }) => {
+        if (error) {
+          return
+        }
+        setStore('delivery', data[0])
+      })
   }
 
   const logout = () => {

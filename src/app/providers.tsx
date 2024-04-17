@@ -74,7 +74,14 @@ export function Providers ({ children }: { children: ReactNode }) {
       return
     }
     if (!delivery.register_complete) {
-      router.push('/register')
+      switch (delivery.register_step) {
+        case 'data_collection':
+          router.push('/register')
+          break
+        case 'data_validation':
+          router.push('/validation')
+          break
+      }
     }
   }, [delivery])
 
