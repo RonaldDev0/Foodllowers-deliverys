@@ -20,7 +20,7 @@ const Toast: FC<ToastProps> = ({ message, isVisible, onClose }) => {
   }
 
   return (
-    <div className='fixed bottom-0 right-0 m-6 animate-bounce'>
+    <div className='fixed bottom-9 right-0 m-6 animate-bounce '>
       <div className='bg-green-500 border-l-4 border-green-700 text-white px-4 py-2 shadow-md rounded-lg transform transition duration-500 ease-in-out hover:scale-105'>
         <div className='flex items-center justify-center gap-5'>
           <span className='font-bold'>{message}</span>

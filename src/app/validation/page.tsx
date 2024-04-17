@@ -12,7 +12,7 @@ export default function Validation () {
           </div>
         </CardHeader>
         <CardBody>
-          <div className='w-96 flex flex-col gap-5'>
+          <div className='w-96 px-4 flex flex-col gap-5'>
             <p>¡Hola!</p>
             <p>Gracias por registrarte para trabajar como delivery en Foodllowers. Queremos informarte que hemos recibido tus datos y actualmente están siendo validados por nuestro equipo.</p>
             <p>Este proceso puede tomar algún tiempo, ya que queremos asegurarnos de que toda la información sea correcta y segura. Tu paciencia durante este tiempo es muy apreciada.</p>
