@@ -2,13 +2,17 @@
 import { Checkbox, Modal, ModalContent, ModalHeader, ModalBody, useDisclosure } from '@nextui-org/react'
 import { ClipboardList } from 'lucide-react'
 
-export function TermsAndConditions () {
+export function TermsAndConditions ({ termsAndConditions, setTermsAndConditions }: { termsAndConditions: boolean, setTermsAndConditions: Function }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
 
   return (
     <>
       <div className='flex justify-center items-center '>
-        <Checkbox color='secondary' />
+        <Checkbox
+          isSelected={termsAndConditions}
+          onChange={({ target: { checked } }) => setTermsAndConditions(checked)}
+          color='secondary'
+        />
         <p onClick={onOpen} className='cursor-pointer hover:opacity-75 transition-all'>
           Términos y condiciones
         </p>

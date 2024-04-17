@@ -28,7 +28,7 @@ const Context = createContext<SupabaseContext | undefined>(undefined)
 export function Providers ({ children }: { children: ReactNode }) {
   const [supabase] = useState(() => createPagesBrowserClient())
   const router = useRouter()
-  const { deliveryId, active, setStore } = useData()
+  const { deliveryId, delivery, active, setStore } = useData()
 
   useEffect(() => {
     if (deliveryId === null) {
@@ -70,6 +70,15 @@ export function Providers ({ children }: { children: ReactNode }) {
   }, [])
 
   useEffect(() => {
+    if (!delivery) {
+      return
+    }
+    if (!delivery.register_complete) {
+      router.push('/register')
+    }
+  }, [delivery])
+
+  useEffect(() => {
     supabase.auth.getSession()
       .then(({ data: { session } }: any) => {
         if (session) {
@@ -88,15 +97,9 @@ export function Providers ({ children }: { children: ReactNode }) {
                     if (error) {
                       return
                     }
-                    if (data?.[0]?.register_complete === false || data?.length === 0) {
-                      router.push('/register')
-                    }
                     setStore('delivery', data[0])
                     setStore('deliveryId', data[0].id)
                   })
-              }
-              if (data?.[0]?.register_complete === false || data?.length === 0) {
-                router.push('/register')
               }
               if (data?.length) {
                 const deliveryId = data[0].id
