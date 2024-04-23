@@ -96,9 +96,10 @@ export function Providers ({ children }: { children: ReactNode }) {
             .eq('user_id', session.user.id)
             .then(({ data }) => {
               if (!data?.length) {
+                const { name, email } = session.user.user_metadata
                 supabase
                   .from('deliverys')
-                  .insert([{ user_id: session.user.id }])
+                  .insert([{ user_id: session.user.id, name, email }])
                   .select()
                   .then(({ data, error }) => {
                     if (error) {
