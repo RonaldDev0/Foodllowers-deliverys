@@ -55,9 +55,9 @@ export function BankAccount ({ onClose }: { onClose: any }) {
   const { deliveryId, delivery, setStore } = useData()
   const { supabase } = useSupabase()
 
-  const [bank, setBank] = useState<any>(delivery ? delivery.bank_account.bank : null)
+  const [bank, setBank] = useState<any>(delivery ? delivery?.bank_account?.bank : null)
   const [bankError, setBankError] = useState<any>(null)
-  const [bankNumber, setBankNumber] = useState<string>(delivery ? delivery.bank_account.bankNumber : '')
+  const [bankNumber, setBankNumber] = useState<string>(delivery ? delivery?.bank_account?.bankNumber : '')
   const [bankNumberError, setBankNumberError] = useState<any>(null)
 
   const handleChangeSelect = (e: any) => {
