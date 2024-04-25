@@ -3,27 +3,13 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect } from 'react'
 import { useData } from '@/store'
 import { useSupabase } from './providers'
-import { Switch } from '@nextui-org/react'
-import { Order, GpsNotification } from '@/components'
+import { Order, GpsNotification, SwitchState } from '@/components'
 
 export default function Home () {
-  const { user, active, currentPosition, delivery, setStore } = useData()
+  const { user, currentPosition, delivery, setStore } = useData()
   const { supabase } = useSupabase()
   const loginCode = useSearchParams().get('code')
   const router = useRouter()
-
-  const setDeliveryState = () => {
-    supabase
-      .from('deliverys')
-      .update({ active: !active })
-      .eq('user_id', user.id)
-      .select()
-      .then(res => {
-        if (res.data) {
-          setStore('active', !active)
-        }
-      })
-  }
 
   useEffect(() => {
     if (loginCode) {
@@ -51,14 +37,7 @@ export default function Home () {
 
   return (
     <main className='flex flex-col gap-4 justify-center items-center'>
-      <div className='w-full flex justify-center gap-48'>
-        <p>{active ? 'estas conectado' : 'no estas conectado'}</p>
-        <Switch
-          color='secondary'
-          isSelected={!!active}
-          onClick={setDeliveryState}
-        />
-      </div>
+      <SwitchState />
       <Order />
     </main>
   )

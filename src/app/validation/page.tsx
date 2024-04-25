@@ -1,6 +1,28 @@
+'use client'
+import { useSupabase } from '../providers'
+import { useEffect } from 'react'
 import { Card, CardHeader, CardBody } from '@nextui-org/react'
+import { useData } from '@/store'
+import { useRouter } from 'next/navigation'
 
 export default function Validation () {
+  const { supabase } = useSupabase()
+  const { delivery, setStore } = useData()
+  const router = useRouter()
+
+  const logout = () => {
+    supabase.auth.signOut()
+      .then(() => setStore('user', null))
+  }
+
+  useEffect(() => {
+    if (!delivery || !delivery.register_complete) {
+      return
+    }
+
+    router.push('/')
+  }, [delivery])
+
   return (
     <main className='fixed z-50 w-full h-screen top-0 left-0 flex flex-col justify-center gap-20 items-center backdrop-blur-md'>
       <Card>
@@ -23,6 +45,11 @@ export default function Validation () {
           </div>
         </CardBody>
       </Card>
+      <div className='w-96 flex justify-center'>
+        <p className='text-purple-700 text-lg font-semibold cursor-pointer' onClick={logout}>
+          Cerrar sesión
+        </p>
+      </div>
     </main>
   )
 }
