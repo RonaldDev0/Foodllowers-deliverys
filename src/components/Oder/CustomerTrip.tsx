@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 'use client'
 import { useData } from '@/store'
 import { Card, CardHeader, CardBody, CardFooter, Button, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from '@nextui-org/react'
@@ -13,6 +14,25 @@ export function CustomerTrip () {
     return
   }
 
+  const { delivery_id, kitchen_id, influencer_id, transaction_amount } = currentOrder
+
+  function updateBalace (table: string, id: string, amount: number) {
+    supabase
+      .from(table)
+      .select('balance')
+      .eq('id', id)
+      .then(({ data, error }) => {
+        if (error) {
+          return
+        }
+        const balance = data[0].balance
+        supabase
+          .from(table)
+          .update({ balance: balance + amount })
+          .eq('id', id)
+      })
+  }
+
   function handleSubmit (onClose: Function) {
     if (currentOrder === null) {
       return
@@ -22,10 +42,11 @@ export function CustomerTrip () {
       .from('shipments')
       .insert({ ...currentOrder, order_state: 'entregado' })
       .select('id')
-      .then(({ error }) => {
+      .then(({ data, error }) => {
         if (error) {
           return
         }
+        const shipment_id = data[0].id
 
         supabase
           .from('orders')
@@ -46,23 +67,39 @@ export function CustomerTrip () {
                   return
                 }
 
-                onClose()
-                setStore('tripState', null)
+                supabase
+                  .from('transactions')
+                  .insert([
+                    { shipment_id, influencer_id, amount: transaction_amount.influencer, transaction_type: 'payment to influencer' },
+                    { shipment_id, kitchen_id, amount: transaction_amount.kitchen, transaction_type: 'payment to kitchen' },
+                    { shipment_id, delivery_id, amount: transaction_amount.delivery.tip + transaction_amount.delivery.service, transaction_type: 'payment to delivery' }
+                  ])
+                  .then(({ error }) => {
+                    if (error) {
+                      return
+                    }
+                    updateBalace('influencers', influencer_id, transaction_amount.influencer)
+                    updateBalace('kitchens', kitchen_id, transaction_amount.kitchen)
+                    updateBalace('deliverys', delivery_id, transaction_amount.delivery.tip + transaction_amount.delivery.service)
 
-                fetch('/api/send_email', {
-                  cache: 'no-store',
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify({
-                    customerEmail: currentOrder.user_email,
-                    nombre: currentOrder.user_name,
-                    direccion: currentOrder.user_address.formatted_address,
-                    numeroDePedido: currentOrder.invoice_id,
-                    detallesDelPedido: currentOrder.product.name,
-                    marcaDelRestaurante: currentOrder.product.influencers.full_name,
-                    transacction: currentOrder.transaction_amount
+                    onClose()
+                    setStore('tripState', null)
+
+                    fetch('/api/send_email', {
+                      cache: 'no-store',
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({
+                        customerEmail: currentOrder.user_email,
+                        nombre: currentOrder.user_name,
+                        direccion: currentOrder.user_address.formatted_address,
+                        numeroDePedido: currentOrder.invoice_id,
+                        detallesDelPedido: currentOrder.product.name,
+                        marcaDelRestaurante: currentOrder.product.influencers.full_name,
+                        transacction: currentOrder.transaction_amount
+                      })
+                    })
                   })
-                })
               })
           })
       })

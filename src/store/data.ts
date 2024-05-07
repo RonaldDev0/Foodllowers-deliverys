@@ -3,6 +3,8 @@ import { create } from 'zustand'
 export interface order {
   id: any
   kitchen_id: string
+  delivery_id: string
+  influencer_id: string
   invoice_id: string
   user_name: string
   user_email: string
@@ -38,7 +40,14 @@ export interface order {
     description: string
     price: number
   }
-  transaction_amount: string
+  transaction_amount: {
+    influencer: number
+    kitchen: number
+    delivery: {
+      tip: number
+      service: number
+    }
+  }
 }
 
 interface State {
