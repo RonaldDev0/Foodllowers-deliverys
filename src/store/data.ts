@@ -52,6 +52,13 @@ export interface order {
 
 interface State {
   darkMode: boolean
+  balanceFetched: boolean
+  balance: number
+  balanceHistory: {
+    id: string
+    created_at: string
+    amount: number
+  }[]
   deliveryId: any
   delivery: {
     bank_account: any,
@@ -75,6 +82,9 @@ interface Actions {
 
 export const useData = create<State & Actions>(set => ({
   darkMode: true,
+  balanceFetched: false,
+  balance: 0,
+  balanceHistory: [],
   deliveryId: null,
   delivery: {
     register_complete: false,

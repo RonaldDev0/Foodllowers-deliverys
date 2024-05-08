@@ -1,23 +1,15 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useData } from '@/store'
 import { useSupabase } from '../providers'
 import { HistoryCard } from './HistoryCard'
 
-export interface Item {
-  id: string
-  created_at: string
-  amount: number
-}
-
 export function History () {
-  const { deliveryId } = useData()
+  const { deliveryId, balanceFetched, balanceHistory, setStore } = useData()
   const { supabase } = useSupabase()
 
-  const [history, setHistory] = useState<Item[]>([])
-
   useEffect(() => {
-    if (!deliveryId) {
+    if (!deliveryId || balanceFetched) {
       return
     }
 
@@ -31,8 +23,9 @@ export function History () {
         if (error) {
           return
         }
-        console.log(data)
-        setHistory(data)
+        console.log('history fetched')
+        setStore('balanceFetched', true)
+        setStore('balanceHistory', data)
       })
   }, [deliveryId])
 
@@ -40,7 +33,7 @@ export function History () {
     <div className='w-96 flex flex-col gap-2'>
       <p>Detalle de ganancia por dia</p>
       <div className='max-h-[70vh] overflow-auto'>
-        {history.map(item => (
+        {balanceHistory.map(item => (
           <HistoryCard key={item.id} item={item} />
         ))}
       </div>
