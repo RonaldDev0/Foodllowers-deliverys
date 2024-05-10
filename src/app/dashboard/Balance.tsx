@@ -21,7 +21,6 @@ export function Balance () {
         if (error) {
           return
         }
-        console.log('balance fetched')
         setStore('balanceFetched', true)
         setStore('balance', data.balance)
       })

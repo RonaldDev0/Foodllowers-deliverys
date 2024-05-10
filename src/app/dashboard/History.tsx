@@ -23,7 +23,6 @@ export function History () {
         if (error) {
           return
         }
-        console.log('history fetched')
         setStore('balanceFetched', true)
         setStore('balanceHistory', data)
       })

@@ -21,15 +21,16 @@ export function CustomerTrip () {
       .from(table)
       .select('balance')
       .eq('id', id)
+      .single()
       .then(({ data, error }) => {
         if (error) {
           return
         }
-        const balance = data[0].balance
         supabase
           .from(table)
-          .update({ balance: balance + amount })
+          .update({ balance: data.balance + amount })
           .eq('id', id)
+          .then(() => {})
       })
   }
 

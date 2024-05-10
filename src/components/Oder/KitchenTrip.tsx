@@ -2,7 +2,7 @@
 'use client'
 import { Card, CardHeader, CardBody, CardFooter, Button, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure, Input } from '@nextui-org/react'
 import { useData } from '@/store'
-import { CircleDollarSign, ChefHat, Home } from 'lucide-react'
+import { ChefHat, Home } from 'lucide-react'
 import { useSupabase } from '@/app/providers'
 import { useState, useRef, useEffect } from 'react'
 
@@ -11,7 +11,7 @@ export function KitchenTrip () {
   const { currentOrder, currentPosition, setStore } = useData()
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
 
-  const [earnings, setEarnings] = useState('')
+  const [earnings, setEarnings] = useState(0)
   const [distance, setDistance] = useState('')
   const [duration, setDuration] = useState('')
   const [values, setValues] = useState(['', '', '', ''])
@@ -23,7 +23,8 @@ export function KitchenTrip () {
       return
     }
 
-    setEarnings('2000')
+    const { service, tip } = currentOrder.transaction_amount.delivery
+    setEarnings(service + tip)
 
     fetch('/api/maps_distance', {
       cache: 'no-cache',
@@ -118,10 +119,7 @@ export function KitchenTrip () {
           </CardHeader>
           <CardBody className='w-96 gap-8'>
             <div className='flex justify-around font-semibold text-xl'>
-              <div className='flex justify-center items-center gap-1'>
-                <CircleDollarSign size={28} />
-                <p>{earnings.toLocaleString()}</p>
-              </div>
+              <p>{earnings.toLocaleString('es-Es', { style: 'currency', currency: 'COP' })}</p>
               <p>{distance}</p>
               <p>{duration}</p>
             </div>
