@@ -30,6 +30,25 @@ export function Providers ({ children }: { children: ReactNode }) {
   const router = useRouter()
   const { deliveryId, delivery, active, setStore } = useData()
 
+  function assignOrderStatus (data: any) {
+    setStore('currentOrder', data)
+
+    switch (data?.order_state) {
+      case 'entregando...':
+        setStore('tripState', 'kitchen=>customer')
+        break
+      case 'recogiendo...':
+        setStore('tripState', 'reciveOrder')
+        break
+      case 'buscando delivery...':
+        setStore('tripState', '=>kitchen')
+        break
+      default:
+        setStore('tripState', null)
+        break
+    }
+  }
+
   useEffect(() => {
     if (deliveryId === null) {
       return
@@ -100,11 +119,9 @@ export function Providers ({ children }: { children: ReactNode }) {
                 supabase
                   .from('deliverys')
                   .insert([{ user_id: session.user.id, name, email }])
-                  .select()
+                  .select('*')
                   .then(({ data, error }) => {
-                    if (error) {
-                      return
-                    }
+                    if (error) return
                     setStore('delivery', data[0])
                     setStore('deliveryId', data[0].id)
                   })
@@ -117,20 +134,10 @@ export function Providers ({ children }: { children: ReactNode }) {
                   .from('orders')
                   .select('*')
                   .eq('delivery_id', deliveryId)
-                  .then(({ data }) => {
-                    const customerTrip = data?.[0]?.order_state === 'entregando...'
-                    const beforeAccepted = data?.[0]?.order_state === 'recogiendo...'
-                    const pendingAccept = data?.[0]?.order_state === 'buscando delivery...'
-
-                    setStore('currentOrder', data?.[0])
-
-                    if (customerTrip) {
-                      setStore('tripState', 'kitchen=>customer')
-                    } else if (beforeAccepted) {
-                      setStore('tripState', 'reciveOrder')
-                    } else if (pendingAccept) {
-                      setStore('tripState', '=>kitchen')
-                    }
+                  .in('order_state', ['entregando...', 'recogiendo...', 'buscando delivery...'])
+                  .then(({ data, error }) => {
+                    if (error || !data.length) return
+                    assignOrderStatus(data[0])
 
                     supabase.channel('orders').on(
                       'postgres_changes',
@@ -141,27 +148,20 @@ export function Providers ({ children }: { children: ReactNode }) {
                         filter: `delivery_id=eq.${deliveryId}`
                       },
                       ({ new: data }) => {
-                        if (!data) {
+                        if (data.order_state === 'buscando delivery...') setStore('soundAlert', true)
+                        if (data) {
+                          assignOrderStatus(data)
                           return
                         }
+
                         supabase
                           .from('orders')
                           .select('*')
                           .eq('delivery_id', deliveryId)
-                          .then(({ data }) => {
-                            const customerTrip = data?.[0]?.order_state === 'entregando...'
-                            const beforeAccepted = data?.[0]?.order_state === 'recogiendo...'
-                            const pendingAccept = data?.[0]?.order_state === 'buscando delivery...'
-
-                            setStore('currentOrder', data?.[0])
-
-                            if (customerTrip) {
-                              setStore('tripState', 'kitchen=>customer')
-                            } else if (beforeAccepted) {
-                              setStore('tripState', 'reciveOrder')
-                            } else if (pendingAccept) {
-                              setStore('tripState', '=>kitchen')
-                            }
+                          .in('order_state', ['entregando...', 'recogiendo...', 'buscando delivery...'])
+                          .then(({ data, error }) => {
+                            if (error || !data.length) return
+                            assignOrderStatus(data[0])
                           })
                       }).subscribe()
                   })

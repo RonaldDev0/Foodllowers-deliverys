@@ -1,7 +1,7 @@
 'use client'
 import { useData } from '@/store'
 import { useSupabase } from '@/app/providers'
-import { Card, CardHeader, CardBody, CardFooter, Button, Avatar, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from '@nextui-org/react'
+import { Card, CardHeader, CardBody, CardFooter, Button, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from '@nextui-org/react'
 
 export function ReciveOrder () {
   const { supabase } = useSupabase()
@@ -43,13 +43,6 @@ export function ReciveOrder () {
               <div className='flex justify-center items-center'>
                 <p>{currentOrder.invoice_id.slice(0, 6)}-</p>
                 <p className='font-bold text-lg'>{currentOrder.invoice_id.slice(6, 10)}</p>
-              </div>
-            </div>
-            <div className='flex items-center gap-2'>
-              <Avatar src={currentOrder.product?.influencers?.avatar} />
-              <div>
-                <p>x1 {currentOrder?.product?.name}</p>
-                <p className='opacity-50'>{currentOrder?.product?.influencers?.full_name}</p>
               </div>
             </div>
 

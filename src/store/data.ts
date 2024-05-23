@@ -51,6 +51,7 @@ export interface order {
 }
 
 interface State {
+  soundAlert: boolean
   darkMode: boolean
   balanceFetched: boolean
   balance: number
@@ -81,6 +82,7 @@ interface Actions {
 }
 
 export const useData = create<State & Actions>(set => ({
+  soundAlert: false,
   darkMode: true,
   balanceFetched: false,
   balance: 0,

@@ -2,7 +2,7 @@
 'use client'
 import { useData } from '@/store'
 import { Card, CardHeader, CardBody, CardFooter, Button, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from '@nextui-org/react'
-import { Home, Info } from 'lucide-react'
+import { Home } from 'lucide-react'
 import { useSupabase } from '@/app/providers'
 
 export function CustomerTrip () {
@@ -117,10 +117,6 @@ export function CustomerTrip () {
             <div className='flex gap-2 items-center'>
               <Home size={28} />
               <p>{currentOrder.user_address?.formatted_address}</p>
-            </div>
-            <div className='flex items-center gap-2'>
-              <Info size={28} />
-              <p>{currentOrder.user_address?.aditionalInfo}</p>
             </div>
           </CardBody>
           <CardFooter className='flex gap-2'>
