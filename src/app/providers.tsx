@@ -149,7 +149,7 @@ export function Providers ({ children }: { children: ReactNode }) {
                       },
                       ({ new: data }) => {
                         if (data.order_state === 'buscando delivery...') setStore('soundAlert', true)
-                        if (data.length > 0) {
+                        if (data) {
                           assignOrderStatus(data)
                           return
                         }
