@@ -71,6 +71,8 @@ interface State {
   user: any
   active: boolean | null
   currentOrder: order | null
+  orderDistance: number | null
+  orderDuration: number | null
   currentPosition: {
     latitude: string
     longitude: string
@@ -97,6 +99,8 @@ export const useData = create<State & Actions>(set => ({
   user: null,
   active: null,
   currentOrder: null,
+  orderDistance: null,
+  orderDuration: null,
   currentPosition: null,
   setStore: (property, value) => set(prev => ({ ...prev, [property]: value }))
 }))

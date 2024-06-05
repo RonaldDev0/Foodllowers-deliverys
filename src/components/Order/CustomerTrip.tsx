@@ -35,18 +35,14 @@ export function CustomerTrip () {
   }
 
   function handleSubmit (onClose: Function) {
-    if (currentOrder === null) {
-      return
-    }
+    if (currentOrder === null) return
 
     supabase
       .from('shipments')
       .insert({ ...currentOrder, order_state: 'entregado' })
       .select('id')
       .then(({ data, error }) => {
-        if (error) {
-          return
-        }
+        if (error) return
         const shipment_id = data[0].id
 
         supabase
@@ -54,9 +50,7 @@ export function CustomerTrip () {
           .delete()
           .eq('id', currentOrder.id)
           .then(({ error }) => {
-            if (error) {
-              return
-            }
+            if (error) return
 
             supabase
               .from('deliverys')
@@ -64,9 +58,7 @@ export function CustomerTrip () {
               .eq('id', deliveryId)
               .select('id')
               .then(({ error }) => {
-                if (error) {
-                  return
-                }
+                if (error) return
 
                 supabase
                   .from('transactions')
@@ -76,9 +68,7 @@ export function CustomerTrip () {
                     { shipment_id, delivery_id, amount: transaction_amount.delivery.tip + transaction_amount.delivery.service, transaction_type: 'payment to delivery' }
                   ])
                   .then(({ error }) => {
-                    if (error) {
-                      return
-                    }
+                    if (error) return
                     updateBalace('influencers', influencer_id, transaction_amount.influencer)
                     updateBalace('kitchens', kitchen_id, transaction_amount.kitchen)
                     updateBalace('deliverys', delivery_id, transaction_amount.delivery.tip + transaction_amount.delivery.service)

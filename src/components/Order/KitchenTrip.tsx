@@ -8,12 +8,10 @@ import { useState, useRef, useEffect } from 'react'
 
 export function KitchenTrip () {
   const { supabase } = useSupabase()
-  const { currentOrder, currentPosition, setStore } = useData()
+  const { currentOrder, currentPosition, orderDistance, orderDuration, setStore } = useData()
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
 
   const [earnings, setEarnings] = useState(0)
-  const [distance, setDistance] = useState('')
-  const [duration, setDuration] = useState('')
   const [values, setValues] = useState(['', '', '', ''])
   const inputsRef = useRef<any>([])
   const [error, setError] = useState<string | null>(null)
@@ -31,22 +29,17 @@ export function KitchenTrip () {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        origin: {
-          lat: currentPosition?.latitude,
-          lng: currentPosition?.longitude
-        },
+        origin: currentPosition,
         destination: currentOrder.user_address.geometry.location,
         waypoint: currentOrder.kitchen_address.geometry.location
       })
     })
       .then(res => res.json())
       .then(data => {
-        if (!data) {
-          return
-        }
+        if (!data) return
 
-        setDistance(data.distance)
-        setDuration(data.duration)
+        setStore('orderDistance', data.distance)
+        setStore('orderDuration', data.duration)
       })
   }, [currentOrder])
 
@@ -101,10 +94,7 @@ export function KitchenTrip () {
         }
 
         setError(null)
-
-        if (error) {
-          return
-        }
+        if (error) return
 
         setStore('tripState', 'reciveOrder')
       })
@@ -119,9 +109,20 @@ export function KitchenTrip () {
           </CardHeader>
           <CardBody className='w-96 gap-8'>
             <div className='flex justify-around font-semibold text-xl'>
-              <p>{earnings.toLocaleString('es-Es', { style: 'currency', currency: 'COP' })}</p>
-              <p>{distance}</p>
-              <p>{duration}</p>
+              <p>
+                {
+                  earnings
+                    .toLocaleString('es-Es', {
+                      style: 'currency',
+                      currency: 'COP',
+                      minimumFractionDigits: 0,
+                      maximumFractionDigits: 0,
+                      useGrouping: true
+                    })
+                }
+              </p>
+              <p>{orderDistance}</p>
+              <p>{orderDuration}</p>
             </div>
             <div>
               <div className='flex gap-2 items-center'>

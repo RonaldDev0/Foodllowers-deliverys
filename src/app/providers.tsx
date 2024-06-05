@@ -1,5 +1,4 @@
 'use client'
-
 import { NextUIProvider } from '@nextui-org/react'
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react'
 import { createPagesBrowserClient } from '@supabase/auth-helpers-nextjs'
@@ -59,11 +58,10 @@ export function Providers ({ children }: { children: ReactNode }) {
         .from('deliverys')
         .update({ current_location: { latitude, longitude, speed, altitude } })
         .eq('id', deliveryId)
-        .select()
-        .then(res => {
-          if (res.data) {
-            setStore('currentPosition', res.data[0].current_location)
-          }
+        .select('current_location')
+        .then(({ error, data }) => {
+          if (error) return
+          setStore('currentPosition', data[0].current_location)
         })
     },
     () => setStore('currentPosition', null))
@@ -89,9 +87,7 @@ export function Providers ({ children }: { children: ReactNode }) {
   }, [])
 
   useEffect(() => {
-    if (!delivery) {
-      return
-    }
+    if (!delivery) return
     if (!delivery.register_complete) {
       switch (delivery.register_step) {
         case 'data_collection':
@@ -136,8 +132,8 @@ export function Providers ({ children }: { children: ReactNode }) {
                   .eq('delivery_id', deliveryId)
                   .in('order_state', ['entregando...', 'recogiendo...', 'buscando delivery...'])
                   .then(({ data, error }) => {
-                    if (error || !data.length) return
-                    assignOrderStatus(data[0])
+                    if (error) return
+                    if (data.length) assignOrderStatus(data[0])
 
                     supabase.channel('orders').on(
                       'postgres_changes',
