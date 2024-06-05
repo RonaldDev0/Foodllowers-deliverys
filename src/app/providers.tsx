@@ -49,19 +49,17 @@ export function Providers ({ children }: { children: ReactNode }) {
   }
 
   useEffect(() => {
-    if (deliveryId === null) {
-      return
-    }
+    if (deliveryId === null) return
 
     const watcher = navigator.geolocation.watchPosition(({ coords: { latitude, longitude, speed, altitude } }) => {
+      setStore('currentPosition', { latitude, longitude, speed, altitude })
       supabase
         .from('deliverys')
         .update({ current_location: { latitude, longitude, speed, altitude } })
         .eq('id', deliveryId)
-        .select('current_location')
-        .then(({ error, data }) => {
-          if (error) return
-          setStore('currentPosition', data[0].current_location)
+        .select('id')
+        .then(({ error }) => {
+          if (error) setStore('currentPosition', null)
         })
     },
     () => setStore('currentPosition', null))
