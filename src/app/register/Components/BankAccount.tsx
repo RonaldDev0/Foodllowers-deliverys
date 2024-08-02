@@ -76,7 +76,7 @@ export function BankAccount ({ onClose }: { onClose: any }) {
       setBankError('Selecciona tu banco')
       return
     }
-    if (bankNumber.length !== 20) {
+    if (bankNumber.length < 9 || bankNumber.length > 20) {
       setBankNumberError('Cuenta de banco invalida')
       return
     }
@@ -100,6 +100,7 @@ export function BankAccount ({ onClose }: { onClose: any }) {
   return (
     <div className='flex flex-col gap-5'>
       <p>Estimado repartidor, para agilizar los pagos de tus entregas, necesitamos que nos proporciones los detalles de tu cuenta bancaria. Esta información será utilizada exclusivamente para realizar los pagos correspondientes a tu trabajo. ¡Gracias por tu colaboración!</p>
+      <p>Asegurarse de que esta cuenta sea suya, no nos hacemos responsables de cualquier pérdida o daño que pudiese sufrir.</p>
       <form className='flex flex-col gap-3' onSubmit={handleSubmit}>
         <Select
           label='Selecciona tu cuenta de banco'
