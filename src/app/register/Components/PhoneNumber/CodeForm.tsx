@@ -30,13 +30,18 @@ export function CodeForm ({ setStep, code, onClose, number }: IProps) {
       setError('Codigo incorrecto')
       return
     }
+
     supabase
       .from('deliverys')
       .update({ phone_number: number })
       .eq('id', deliveryId)
-      .select()
-      .then(({ data, error }) => {
+      .select('*')
+      .then(({ error, data }) => {
         if (error) {
+          if (error.message === 'duplicate key value violates unique constraint "deliverys_phone_number_key"') {
+            setError('Ya existe un repartidor con ese número')
+            return
+          }
           return
         }
 
