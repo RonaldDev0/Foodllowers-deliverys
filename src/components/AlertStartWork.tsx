@@ -1,9 +1,13 @@
+'use client'
+import { usePathname } from 'next/navigation'
 import { Card, CardHeader, CardBody, CardFooter } from '@nextui-org/react'
 import { PartyPopper } from 'lucide-react'
 
 export function AlertStartWork () {
   const isStartWork = new Date() >= new Date('2024-09-01')
-  if (isStartWork) return null
+  const pathname = usePathname()
+
+  if (isStartWork || pathname === '/login' || pathname === '/register') return null
   return (
     <div className='fixed z-50 w-full h-screen top-0 left-0 flex flex-col justify-center gap-20 items-center backdrop-blur-md'>
       <Card className='w-96 p-4'>
