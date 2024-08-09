@@ -4,11 +4,13 @@ import { useData } from '@/store'
 import { Card, CardHeader, CardBody, CardFooter, Button, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from '@nextui-org/react'
 import { Home } from 'lucide-react'
 import { useSupabase } from '@/app/providers'
+import { useRouter } from 'next/navigation'
 
 export function CustomerTrip () {
   const { currentOrder, deliveryId, setStore } = useData()
   const { supabase } = useSupabase()
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
+  const router = useRouter()
 
   if (currentOrder === null) {
     return
@@ -42,7 +44,10 @@ export function CustomerTrip () {
       .insert({ ...currentOrder, order_state: 'entregado' })
       .select('id')
       .then(({ data, error }) => {
-        if (error) return
+        if (error) {
+          router.refresh()
+          return
+        }
         const shipment_id = data[0].id
 
         supabase
