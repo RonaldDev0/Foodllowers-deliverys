@@ -66,7 +66,7 @@ export function CustomerTrip () {
                 if (error) return
 
                 supabase
-                  .from('transactions')
+                  .from('earnings')
                   .insert([
                     { shipment_id, influencer_id, amount: transaction_amount.influencer, transaction_type: 'payment to influencer' },
                     { shipment_id, kitchen_id, amount: transaction_amount.kitchen, transaction_type: 'payment to kitchen' },
