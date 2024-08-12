@@ -1,5 +1,5 @@
-import { Smartphone, Fingerprint, Car, KeySquare, Landmark } from 'lucide-react'
-import { BankAccount, IdentificationCard, License, PropertyCard } from './Components'
+import { Smartphone, Fingerprint, Car, KeySquare, Landmark, Camera, LucideUser2, ShoppingBag } from 'lucide-react'
+import { BankAccount, IdentificationCard, License, PropertyCard, LicensePlatePhoto, UserPicture, BagPicture } from './Components'
 import { PhoneNumber } from './Components/PhoneNumber'
 
 export interface IStep {
@@ -12,6 +12,12 @@ export interface IStep {
 const size = 40
 
 export const registerSteps: IStep[] = [
+  {
+    icon: <LucideUser2 size={size} />,
+    title: 'Foto de usuario',
+    component: <UserPicture onClose={() => {}} />,
+    tableReference: 'user_picture'
+  },
   {
     icon: <Smartphone size={size} />,
     title: 'Número de celular',
@@ -31,10 +37,22 @@ export const registerSteps: IStep[] = [
     tableReference: 'license'
   },
   {
+    icon: <Camera size={size} />,
+    title: 'Foto de la placa',
+    component: <LicensePlatePhoto onClose={() => {}} />,
+    tableReference: 'license_plate_photo'
+  },
+  {
     icon: <KeySquare size={size} />,
     title: 'Tarjeta de propiedad',
     component: <PropertyCard onClose={() => {}} />,
     tableReference: 'property_card'
+  },
+  {
+    icon: <ShoppingBag size={size} />,
+    title: 'Foto de la mochila',
+    component: <BagPicture onClose={() => {}} />,
+    tableReference: 'bag_picture'
   },
   {
     icon: <Landmark size={size} />,

@@ -12,7 +12,7 @@ export async function POST (req: NextRequest) {
     body: `Tu codigo de verificación para Foodllowers-Deliverys es: ${code}`
   })
 
-  console.log(message)
+  // console.log(message)
 
   return NextResponse.json(message)
 }
