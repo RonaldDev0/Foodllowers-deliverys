@@ -76,15 +76,6 @@ export function Providers ({ children }: { children: ReactNode }) {
   }, [router, supabase])
 
   useEffect(() => {
-    supabase.auth.getSession()
-      .then(({ data: { session } }: any) => {
-        if (session) {
-          setStore('user', session.user)
-        }
-      })
-  }, [])
-
-  useEffect(() => {
     if (!delivery) return
     if (!delivery.register_complete) {
       switch (delivery.register_step) {
