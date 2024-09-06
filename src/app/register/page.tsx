@@ -44,10 +44,22 @@ function validateForm (delivery: any, termsAndConditions: boolean) {
     return { success: false, error: 'Ingresa la foto de la placa antes de continuar' }
   } else if (!delivery.property_card) {
     return { success: false, error: 'Ingresa los datos de tu targeta de propiedad antes de continuar' }
-  } else if (!delivery.bank_account) {
-    return { success: false, error: 'Ingresa los datos de tu cuenta bancaria antes de continuar' }
   } else if (!delivery.bag_picture) {
     return { success: false, error: 'Ingresa la foto de la mochila antes de continuar' }
+  } else if (!delivery.bank_account) {
+    return { success: false, error: 'Ingresa los datos de tu cuenta bancaria antes de continuar' }
+  } else if (!delivery.bank_account.accountType) {
+    return { success: false, error: 'Selecciona tu tipo de cuenta bancaria antes de continuar' }
+  } else if (!delivery.bank_account.bank) {
+    return { success: false, error: 'Selecciona tu entidad bancaria antes de continuar' }
+  } else if (!delivery.bank_account.bankNumber) {
+    return { success: false, error: 'Ingresa tu número de cuenta bancaria antes de continuar' }
+  } else if (!delivery.bank_account.ownerName) {
+    return { success: false, error: 'Ingresa el nombre del propietario de la cuenta bancaria antes de continuar' }
+  } else if (!delivery.bank_account.ownerDocumentType) {
+    return { success: false, error: 'Selecciona tu tipo de documento antes de continuar' }
+  } else if (!delivery.bank_account.ownerDocumentNumber) {
+    return { success: false, error: 'Ingresa tu número de documento antes de continuar' }
   } else if (!termsAndConditions) {
     return { success: false, error: 'Debes aceptar los terminos y condiciones antes de continuar' }
   }

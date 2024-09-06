@@ -17,11 +17,14 @@ export function CardItem ({ icon, title, component, tableReference }: IStep) {
       return
     }
 
-    if (tableReference === 'identification_card') {
+    if (tableReference === 'bank_account') {
       setChecked((
-        !!delivery?.identification_card &&
-        !!delivery?.identification_card_front &&
-        !!delivery?.identification_card_back
+        !!delivery?.bank_account?.accountType &&
+        !!delivery?.bank_account?.bank &&
+        !!delivery?.bank_account?.bankNumber &&
+        !!delivery?.bank_account?.ownerName &&
+        !!delivery?.bank_account?.ownerDocumentType &&
+        !!delivery?.bank_account?.ownerDocumentNumber
       ))
       return
     }
