@@ -37,7 +37,7 @@ export function NavBarr () {
                 <Link href='/settings'>
                   <div className='flex gap-3'>
                     <Settings />
-                    <p>Settings</p>
+                    <p>Configuracion</p>
                   </div>
                 </Link>
               </DropdownItem>
@@ -45,14 +45,14 @@ export function NavBarr () {
                 <Link href='/profile'>
                   <div className='flex gap-3'>
                     <User />
-                    <p>Profile</p>
+                    <p>Perfil</p>
                   </div>
                 </Link>
               </DropdownItem>
               <DropdownItem onPress={logout} className='text-danger' color='danger'>
                 <div className='flex gap-3'>
                   <LogOut />
-                  <p>Logout</p>
+                  <p>Cerrar sesión</p>
                 </div>
               </DropdownItem>
             </DropdownMenu>
