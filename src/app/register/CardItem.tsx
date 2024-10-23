@@ -35,7 +35,7 @@ export function CardItem ({ icon, title, component, tableReference }: IStep) {
   return (
     <>
       <div onClick={onOpen}>
-        <Card className='relative group cursor-pointer w-96'>
+        <Card className='relative group cursor-pointer w-96 [@media(max-width:365px)]:!w-80'>
           <CardBody>
             <div className='flex justify-between items-center relative'>
               <div className='flex items-center gap-5'>

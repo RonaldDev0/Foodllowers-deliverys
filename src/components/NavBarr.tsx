@@ -20,7 +20,7 @@ export function NavBarr () {
 
   return (
     <nav className='w-full flex justify-around items-center mb-5 mt-5'>
-      <Card className='w-96'>
+      <Card className='w-96 [@media(max-width:365px)]:!w-80'>
         <CardHeader className='flex justify-around'>
           <Link href='/'>
             <Home size={28} />
