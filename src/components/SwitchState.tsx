@@ -56,7 +56,7 @@ export function SwitchState () {
 
   return (
     <>
-      <div className='w-full flex justify-center gap-48'>
+      <div className='w-full [@media(max-width:365px)]:!w-80 flex justify-center gap-48'>
         <p>{!active && 'no'} estas conectado</p>
         <Switch
           color='secondary'
