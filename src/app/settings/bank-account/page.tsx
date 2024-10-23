@@ -98,7 +98,7 @@ export default function BankAccount () {
   }
 
   return (
-    <Card className='w-96'>
+    <Card className='w-96 [@media(max-width:365px)]:!w-80'>
       <Toast
         message='Cuenta de banco guardada!'
         isVisible={toastVisible}

@@ -29,7 +29,7 @@ export function History () {
   }, [deliveryId])
 
   return (
-    <div className='w-96 flex flex-col gap-2'>
+    <div className='w-96 [@media(max-width:365px)]:!w-80 flex flex-col gap-2'>
       <p>Detalle de ganancia por pedido</p>
       <div className='max-h-[70vh] overflow-auto'>
         {balanceHistory.map(item => (

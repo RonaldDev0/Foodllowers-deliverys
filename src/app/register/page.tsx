@@ -142,7 +142,7 @@ export default function Register () {
         <Button
           onClick={handleSubmit}
           color='secondary'
-          className='w-96 font-semibold text-lg'
+          className='w-96 [@media(max-width:365px)]:!w-80 font-semibold text-lg'
         >
           Continuar
         </Button>

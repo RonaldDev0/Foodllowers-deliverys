@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 
 export interface order {
+  preferences: any
   id: any
   kitchen_id: string
   delivery_id: string

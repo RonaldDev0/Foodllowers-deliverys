@@ -107,7 +107,7 @@ export function KitchenTrip () {
           <CardHeader className='flex justify-center font-semibold'>
             Detalle de la entrega
           </CardHeader>
-          <CardBody className='w-96 gap-8'>
+          <CardBody className='w-96 [@media(max-width:365px)]:!w-80 gap-8'>
             <div className='flex justify-around font-semibold text-xl'>
               <p>
                 {
