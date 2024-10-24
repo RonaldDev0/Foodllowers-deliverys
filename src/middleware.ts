@@ -7,6 +7,8 @@ export async function middleware (req: NextRequest) {
   const supabase = createMiddlewareClient({ req, res })
   const { data: { session } }: any = await supabase.auth.getSession()
 
+  if (req.url.endsWith('/install')) return res
+
   const isStaticFile = /\.(ico|svg|png|jpg|jpeg|gif|webp)$/
     .test(req.nextUrl.pathname)
 
