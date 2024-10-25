@@ -147,12 +147,6 @@ export function BankAccount ({ onClose }: { onClose: any }) {
           <SelectItem value='2' key='2'>
             Cédula de extranjería
           </SelectItem>
-          <SelectItem value='3' key='3'>
-            NIT
-          </SelectItem>
-          <SelectItem value='6' key='6'>
-            Pasaporte
-          </SelectItem>
         </Select>
         <Input
           label='Número de documento del propietario'
