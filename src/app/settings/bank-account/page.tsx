@@ -183,7 +183,7 @@ export default function BankAccount () {
             errorMessage={ownerDocumentTypeError && ownerDocumentTypeError}
             isInvalid={!!ownerDocumentTypeError}
           >
-            <SelectItem value='value' key='key'>
+            <SelectItem value='1' key='1'>
               Cédula de ciudadanía
             </SelectItem>
             <SelectItem value='2' key='2'>
