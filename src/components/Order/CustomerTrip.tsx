@@ -16,7 +16,7 @@ export function CustomerTrip () {
     return
   }
 
-  const { delivery_id, influencer_id, transaction_amount } = currentOrder
+  const { delivery_id, transaction_amount } = currentOrder
 
   function updateBalace (table: string, id: string, amount: number) {
     supabase
@@ -68,12 +68,10 @@ export function CustomerTrip () {
                 supabase
                   .from('earnings')
                   .insert([
-                    { shipment_id, influencer_id, amount: transaction_amount.influencer, transaction_type: 'payment to influencer' },
                     { shipment_id, delivery_id, amount: transaction_amount.delivery.tip + transaction_amount.delivery.service, transaction_type: 'payment to delivery' }
                   ])
                   .then(({ error }) => {
                     if (error) return
-                    updateBalace('influencers', influencer_id, transaction_amount.influencer)
                     updateBalace('deliverys', delivery_id, transaction_amount.delivery.tip + transaction_amount.delivery.service)
 
                     onClose()
