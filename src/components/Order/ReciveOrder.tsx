@@ -41,8 +41,8 @@ export function ReciveOrder () {
             <div className='flex gap-3 mb-2'>
               <p>ID del pedido:</p>
               <div className='flex justify-center items-center'>
-                <p>{currentOrder.invoice_id.slice(0, 6)}-</p>
-                <p className='font-bold text-lg'>{currentOrder.invoice_id.slice(6, 10)}</p>
+                <p>{currentOrder.invoice_id.slice(0, -3)}-</p>
+                <p className='font-bold text-lg'>{currentOrder.invoice_id.slice(-3)}</p>
               </div>
             </div>
 
