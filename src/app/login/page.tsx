@@ -73,7 +73,7 @@ export default function Login () {
                       Los deliverys son responsables de la entrega segura y puntual de los productos.<br /> <br /> Deben informar cualquier incidente relacionado con la entrega de inmediato a Foodllowers.<br /> <br />
 
                       <b>3. Políticas de Pago:</b> <br /> <br />
-                      pagos a los deliverys se realizarán mensualmente, previa verificación de las entregas realizadas.<br /> <br /> Los deliverys deben confirmar la recepción de pagos y reportar cualquier discrepancia dentro de las 24 horas.<br /> <br />
+                      Los pagos a los deliverys se realizarán semanalmente, previa verificación de las entregas realizadas.<br /> <br /> Los deliverys deben confirmar la recepción de pagos y reportar cualquier discrepancia dentro de las 24 horas.<br /> <br />
 
                       <b>4. Uso del Servicio:</b> <br /> <br />
                       Los deliverys deben utilizar la app exclusivamente para fines relacionados con la entrega de pedidos de Foodllowers.<br /> <br /> El uso no autorizado de la app resultará en la terminación del contrato.<br /> <br />
