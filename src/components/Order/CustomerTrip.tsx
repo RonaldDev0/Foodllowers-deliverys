@@ -77,6 +77,19 @@ export function CustomerTrip () {
                     onClose()
                     setStore('tripState', null)
 
+                    supabase
+                      .from('earnings')
+                      .select('*')
+                      .eq('delivery_id', deliveryId)
+                      .order('created_at', { ascending: false })
+                      .range(0, 10)
+                      .then(({ data, error }) => {
+                        if (error) return
+
+                        setStore('balanceFetched', true)
+                        setStore('balanceHistory', data)
+                      })
+
                     fetch('/api/send_email', {
                       cache: 'no-store',
                       method: 'POST',
