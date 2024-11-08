@@ -2,7 +2,7 @@
 'use client'
 import { useData } from '@/store'
 import { Card, CardHeader, CardBody, CardFooter, Button, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from '@nextui-org/react'
-import { Home, User } from 'lucide-react'
+import { Home, User, Phone, Clipboard } from 'lucide-react'
 import { useSupabase } from '@/app/providers'
 import { useRouter } from 'next/navigation'
 
@@ -121,6 +121,22 @@ export function CustomerTrip () {
             <div className='flex gap-2 items-center'>
               <User size={28} />
               <p>{currentOrder.user_name}</p>
+            </div>
+            <div className='flex gap-2 items-center'>
+              <Phone size={28} />
+              <div className='flex gap-2 items-center'>
+                <p
+                  className='text-purple-800 font-bold cursor-pointer'
+                  onClick={() => window.open(`tel:${currentOrder.user_address?.number}`, '_blank')}
+                >
+                  {currentOrder.user_address?.number}
+                </p>
+                <Clipboard
+                  size={28}
+                  className='opacity-60 cursor-pointer'
+                  onClick={() => navigator.clipboard.writeText(currentOrder.user_address?.number.toString())}
+                />
+              </div>
             </div>
             <div className='flex gap-2 items-center'>
               <Home size={28} />
