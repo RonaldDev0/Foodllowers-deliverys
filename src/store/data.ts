@@ -10,6 +10,7 @@ export interface order {
   user_name: string
   user_email: string
   user_address: {
+    number: number
     aditionalInfo: string
     formatted_address: string
     geometry: {
