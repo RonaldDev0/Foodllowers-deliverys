@@ -1,20 +1,28 @@
 'use client'
 import Image from 'next/image'
-import { Button, Card, CardHeader, CardBody, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from '@nextui-org/react'
+import { Button, Card, CardHeader, CardBody, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure, Checkbox } from '@nextui-org/react'
 import { ClipboardList } from 'lucide-react'
 import { useSupabase } from '../providers'
+import { useState } from 'react'
 
 export default function Login () {
   const { supabase } = useSupabase()
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
+  const { isOpen: isOpenModal, onOpen: onOpenModal, onOpenChange: onOpenChangeModal } = useDisclosure()
+  const [checked, setCkecked] = useState(false)
 
-  const Login = async () => await supabase
-    .auth
-    .signInWithOAuth(
-      {
+  function login () {
+    if (!checked) {
+      onOpenModal()
+      return
+    }
+
+    supabase.auth
+      .signInWithOAuth({
         provider: 'google'
-      }
-    )
+        // options: { redirectTo: window.location.origin + '/api/auth/callback' }
+      })
+  }
 
   return (
     <main className='h-screen flex justify-center items-center'>
@@ -33,7 +41,7 @@ export default function Login () {
           Iniciar sesión
         </CardHeader>
         <Button
-          onPress={Login}
+          onPress={() => login()}
           className='flex justify-center items-center gap-2 w-80 py-6 text-lg bg-zinc-950'
         >
           <Image
@@ -47,9 +55,10 @@ export default function Login () {
           </p>
         </Button>
         <CardBody className='justify-center items-center flex flex-col gap-6'>
-          <div>
+          <div className='flex justify-center items-center gap-2'>
+            <Checkbox isSelected={checked} onChange={() => setCkecked(!checked)} />
             <p className='text-purple-500 cursor-pointer' onClick={onOpen}>
-              Al continuar estas aceptando los <br /> Terminos y Condiciones de Uso
+              Terminos y Condiciones de Uso
             </p>
           </div>
           <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
@@ -85,6 +94,25 @@ export default function Login () {
                   <ModalFooter>
                     {}
                   </ModalFooter>
+                </>
+              )}
+            </ModalContent>
+          </Modal>
+          <Modal isOpen={isOpenModal} onOpenChange={onOpenChangeModal}>
+            <ModalContent>
+              {() => (
+                <>
+                  <ModalHeader>
+                    <div className='flex flex-col gap-3 justify-center items-center w-full'>
+                      <ClipboardList size={30} />
+                      <p className='font-semibold text-lg'>
+                        Términos y Condiciones de Uso
+                      </p>
+                    </div>
+                  </ModalHeader>
+                  <ModalBody>
+                    para continuar debes aceptar los términos y condiciones de uso
+                  </ModalBody>
                 </>
               )}
             </ModalContent>
