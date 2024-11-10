@@ -5,9 +5,10 @@ import { Card, CardHeader, CardBody, CardFooter, Button, Modal, ModalContent, Mo
 import { Home, User, Phone, Clipboard } from 'lucide-react'
 import { useSupabase } from '@/app/providers'
 import { useRouter } from 'next/navigation'
+import { Toaster, toast } from 'sonner'
 
 export function CustomerTrip () {
-  const { currentOrder, deliveryId, setStore } = useData()
+  const { currentOrder, deliveryId, darkMode, setStore } = useData()
   const { supabase } = useSupabase()
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
   const router = useRouter()
@@ -112,6 +113,11 @@ export function CustomerTrip () {
 
   return (
     <>
+      <Toaster
+        expand
+        richColors
+        theme={darkMode ? 'dark' : 'light'}
+      />
       <div className='fixed w-screen h-screen flex top-0 left-0 justify-center items-center'>
         <Card className='p-2'>
           <CardHeader className='flex justify-center font-semibold'>
@@ -134,7 +140,10 @@ export function CustomerTrip () {
                 <Clipboard
                   size={28}
                   className='opacity-60 cursor-pointer'
-                  onClick={() => navigator.clipboard.writeText(currentOrder.user_address?.number.toString())}
+                  onClick={() => {
+                    navigator.clipboard.writeText(currentOrder.user_address?.number.toString())
+                    toast.info('Número copiado en el portapapeles')
+                  }}
                 />
               </div>
             </div>
