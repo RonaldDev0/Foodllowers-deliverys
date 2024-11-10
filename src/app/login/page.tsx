@@ -5,6 +5,8 @@ import { ClipboardList } from 'lucide-react'
 import { useSupabase } from '../providers'
 import { useState } from 'react'
 
+export const revalidate = 7 * 24 * 60 * 60
+
 export default function Login () {
   const { supabase } = useSupabase()
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
