@@ -49,10 +49,6 @@ export function Providers ({ children }: { children: ReactNode }) {
   }
 
   useEffect(() => {
-    if ('serviceWorker' in navigator && 'Notification' in window) Notification.requestPermission()
-  }, [])
-
-  useEffect(() => {
     if (deliveryId === null) return
 
     const watcher = navigator.geolocation.watchPosition(({ coords: { latitude, longitude, speed, altitude } }) => {
@@ -137,17 +133,7 @@ export function Providers ({ children }: { children: ReactNode }) {
                         filter: `delivery_id=eq.${deliveryId}`
                       },
                       ({ new: data }) => {
-                        if (data.order_state === 'buscando delivery...') {
-                          setStore('soundAlert', true)
-                          if (Notification.permission === 'granted') {
-                            const notificacion = new Notification('Tienes una nueva orden', {
-                              requireInteraction: true
-                            })
-                            notificacion.onclick = () => window.focus()
-                          } else {
-                            Notification.requestPermission()
-                          }
-                        }
+                        if (data.order_state === 'buscando delivery...') setStore('soundAlert', true)
 
                         if (data && data.kitchen_address && data.product) {
                           assignOrderStatus(data)

@@ -4,7 +4,6 @@ import { useEffect } from 'react'
 import { useData } from '@/store'
 import { useSupabase } from './providers'
 import { Order, GpsNotification, SwitchState } from '@/components'
-import { Button } from '@nextui-org/react'
 
 export default function Home () {
   const { user, currentPosition, delivery, setStore } = useData()
@@ -38,21 +37,6 @@ export default function Home () {
     <main className='flex flex-col gap-4 justify-center items-center'>
       <SwitchState />
       <Order />
-
-      <Button
-        color='secondary'
-        onClick={() => {
-          if (Notification.permission === 'granted') {
-            const notificacion = new Notification('tienes una nueva orden', {
-              requireInteraction: true
-            })
-            notificacion.onclick = () => window.focus()
-            console.log({ notificacion })
-          }
-        }}
-      >
-        Notification
-      </Button>
     </main>
   )
 }
