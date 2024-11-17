@@ -14,7 +14,7 @@ export function PhoneNumber ({ onClose }: { onClose: any }) {
   function createCode () {
     const code = (Math.floor(100000 + Math.random() * 900000)).toString()
     setCode(code)
-    fetch('/api/send_sms', {
+    fetch('/api/send_whatsapp', {
       cache: 'no-store',
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
