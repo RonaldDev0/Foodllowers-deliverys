@@ -7,8 +7,8 @@ export async function POST (req: NextRequest) {
   const { code, number } = await req.json()
 
   const message = await twilio.messages.create({
-    from: process.env.TWILIO_PHONE_NUMBER,
-    to: '+57' + number,
+    from: process.env.TWILIO_PHONE_NUMBER_WHATSAPP,
+    to: 'whatsapp:+57' + number,
     body: `Tu codigo de verificación para Foodllowers-Deliverys es: ${code}`
   })
 
