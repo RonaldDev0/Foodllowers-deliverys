@@ -40,10 +40,18 @@ export function ReciveOrder () {
           <CardBody className='w-96 [@media(max-width:365px)]:!w-80 gap-8'>
             <div className='flex gap-3 mb-2'>
               <p>ID del pedido:</p>
-              <div className='flex justify-center items-center'>
-                <p>{currentOrder.invoice_id.slice(0, -3)}-</p>
-                <p className='font-bold text-lg'>{currentOrder.invoice_id.slice(-3)}</p>
-              </div>
+              {currentOrder.invoice_id
+                ? (
+                  <div className='flex justify-center items-center'>
+                    <p>{currentOrder.invoice_id.slice(0, -3)}-</p>
+                    <p className='font-bold text-lg'>{currentOrder.invoice_id.slice(-3)}</p>
+                  </div>
+                  )
+                : (
+                  <div className='flex justify-center items-center'>
+                    <p className='font-bold text-lg'>{currentOrder.id.slice(-4).toUpperCase()}</p>
+                  </div>
+                  )}
             </div>
 
           </CardBody>
