@@ -91,6 +91,8 @@ export function CustomerTrip () {
                         setStore('balanceHistory', data)
                       })
 
+                    if (currentOrder.user_email === 'Desconocido') return
+
                     fetch('/api/send_email', {
                       cache: 'no-store',
                       method: 'POST',
@@ -100,7 +102,7 @@ export function CustomerTrip () {
                         nombre: currentOrder.user_name,
                         direccion: currentOrder.user_address.formatted_address,
                         numeroDePedido: currentOrder.invoice_id,
-                        detallesDelPedido: currentOrder.product.name,
+                        detallesDelPedido: currentOrder.product.name || 'Desconocido',
                         marcaDelRestaurante: currentOrder.product.influencers.full_name,
                         transacction: currentOrder.transaction_amount
                       })
