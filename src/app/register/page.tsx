@@ -34,16 +34,16 @@ const Toast: FC<ToastProps> = ({ message, isVisible, onClose }) => {
 function validateForm (delivery: any, termsAndConditions: boolean) {
   if (!delivery.user_picture) {
     return { success: false, error: 'Ingresa la foto de tu rostro antes de continuar' }
-  } else if (!delivery.phone_number) {
-    return { success: false, error: 'Ingresa tu número de celular antes de continuar' }
+  // } else if (!delivery.phone_number) {
+  //   return { success: false, error: 'Ingresa tu número de celular antes de continuar' }
   } else if (!delivery.identification_card || !delivery.identification_card_front || !delivery.identification_card_back) {
     return { success: false, error: 'Ingresa los datos de tu cedula antes de continuar' }
   } else if (!delivery.license) {
     return { success: false, error: 'Ingresa los datos de tu licencia antes de continuar' }
-  } else if (!delivery.license_plate_photo) {
-    return { success: false, error: 'Ingresa la foto de la placa antes de continuar' }
-  } else if (!delivery.property_card) {
-    return { success: false, error: 'Ingresa los datos de tu targeta de propiedad antes de continuar' }
+  // } else if (!delivery.license_plate_photo) {
+  //   return { success: false, error: 'Ingresa la foto de la placa antes de continuar' }
+  // } else if (!delivery.property_card) {
+  //   return { success: false, error: 'Ingresa los datos de tu targeta de propiedad antes de continuar' }
   } else if (!delivery.bag_picture) {
     return { success: false, error: 'Ingresa la foto de la mochila antes de continuar' }
   } else if (!delivery.bank_account) {

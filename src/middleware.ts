@@ -8,7 +8,7 @@ export async function middleware (req: NextRequest) {
   const { data: { session } } = await supabase.auth.getSession()
   const { pathname, searchParams } = req.nextUrl
 
-  if (searchParams.has('code') || pathname === '/api/get_only_delivery') return res
+  if (searchParams.has('code')) return res
 
   if (pathname === '/login' && session?.user?.role === 'authenticated') {
     return NextResponse.redirect(new URL('/', req.url))

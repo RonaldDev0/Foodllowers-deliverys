@@ -1,6 +1,5 @@
-import { Smartphone, Fingerprint, Car, KeySquare, Landmark, Camera, LucideUser2, ShoppingBag } from 'lucide-react'
-import { BankAccount, IdentificationCard, License, PropertyCard, LicensePlatePhoto, UserPicture, BagPicture } from './Components'
-import { PhoneNumber } from './Components/PhoneNumber'
+import { Fingerprint, Car, Landmark, LucideUser2, ShoppingBag } from 'lucide-react'
+import { BankAccount, IdentificationCard, License, UserPicture, BagPicture } from './Components'
 
 export interface IStep {
   icon: any
@@ -18,12 +17,12 @@ export const registerSteps: IStep[] = [
     component: <UserPicture onClose={() => {}} />,
     tableReference: 'user_picture'
   },
-  {
-    icon: <Smartphone size={size} />,
-    title: 'Número de celular',
-    component: <PhoneNumber onClose={() => {}} />,
-    tableReference: 'phone_number'
-  },
+  // {
+  //   icon: <Smartphone size={size} />,
+  //   title: 'Número de celular',
+  //   component: <PhoneNumber onClose={() => {}} />,
+  //   tableReference: 'phone_number'
+  // },
   {
     icon: <Fingerprint size={size} />,
     title: 'Cedula de ciudadania',
@@ -36,18 +35,18 @@ export const registerSteps: IStep[] = [
     component: <License onClose={() => {}} />,
     tableReference: 'license'
   },
-  {
-    icon: <Camera size={size} />,
-    title: 'Foto de la placa',
-    component: <LicensePlatePhoto onClose={() => {}} />,
-    tableReference: 'license_plate_photo'
-  },
-  {
-    icon: <KeySquare size={size} />,
-    title: 'Tarjeta de propiedad',
-    component: <PropertyCard onClose={() => {}} />,
-    tableReference: 'property_card'
-  },
+  // {
+  //   icon: <Camera size={size} />,
+  //   title: 'Foto de la placa',
+  //   component: <LicensePlatePhoto onClose={() => {}} />,
+  //   tableReference: 'license_plate_photo'
+  // },
+  // {
+  //   icon: <KeySquare size={size} />,
+  //   title: 'Tarjeta de propiedad',
+  //   component: <PropertyCard onClose={() => {}} />,
+  //   tableReference: 'property_card'
+  // },
   {
     icon: <ShoppingBag size={size} />,
     title: 'Foto de la mochila',
